@@ -122,5 +122,3 @@ pip install pandas numpy requests requests-cache retry-requests openmeteo-reques
 ## Data Sources
 
 - **Drive link:** https://drive.google.com/drive/folders/1k8BDFHhVXrcpNhFYbuBb2A75xsNAu6UF?usp=drive_link
-- **Fire events:** [NASA FIRMS VIIRS-SNPP](https://firms.modaps.eosdis.nasa.gov/) — Azerbaijan 2024
-- **Geographic boundaries:** Azerbaijan KMZ (forest borders overlay)
