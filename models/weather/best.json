@@ -1,0 +1,60 @@
+{
+  "temperature_2m": {
+    "algo": "hgbr",
+    "horizon": 1,
+    "metrics": {
+      "MAE": 1.1664228781540649,
+      "RMSE": 1.5722816647248863,
+      "R2": 0.9662511471175109,
+      "n": 2360,
+      "MAPE_pct": 35.868450183559325
+    },
+    "model_path": "/var/home/manheim666/Desktop/ARIAN/models/weather/temperature_2m/hgbr.joblib"
+  },
+  "wind_speed_10m": {
+    "algo": "hgbr",
+    "horizon": 1,
+    "metrics": {
+      "MAE": 2.3928513187303904,
+      "RMSE": 3.388520131201378,
+      "R2": 0.4703384238528746,
+      "n": 2360,
+      "MAPE_pct": 36.2797103808868
+    },
+    "model_path": "/var/home/manheim666/Desktop/ARIAN/models/weather/wind_speed_10m/hgbr.joblib"
+  },
+  "wind_direction_10m": {
+    "algo": "hgbr",
+    "horizon": 1,
+    "metrics": {
+      "MAE": 78.13464403053167,
+      "RMSE": 92.89349573374206,
+      "R2": NaN,
+      "n": 2360,
+      "circular_MAE_deg": 78.13464403053167
+    },
+    "model_path": "/var/home/manheim666/Desktop/ARIAN/models/weather/wind_direction_10m/hgbr.joblib"
+  },
+  "rain": {
+    "algo": "hgbr",
+    "horizon": 1,
+    "metrics": {
+      "MAE": 2.395025375243471,
+      "RMSE": 5.812628912579132,
+      "R2": 0.14162859786670923,
+      "n": 2360
+    },
+    "model_path": "/var/home/manheim666/Desktop/ARIAN/models/weather/rain/hgbr.joblib"
+  },
+  "precipitation": {
+    "algo": "hgbr",
+    "horizon": 1,
+    "metrics": {
+      "MAE": 2.62241809441669,
+      "RMSE": 5.976337863948262,
+      "R2": 0.1538661720926926,
+      "n": 2360
+    },
+    "model_path": "/var/home/manheim666/Desktop/ARIAN/models/weather/precipitation/hgbr.joblib"
+  }
+}
