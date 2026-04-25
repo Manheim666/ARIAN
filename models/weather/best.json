@@ -1,0 +1,60 @@
+{
+  "temperature_2m": {
+    "algo": "hgbr",
+    "horizon": 1,
+    "metrics": {
+      "MAE": 1.163135361864949,
+      "RMSE": 1.5732217249568918,
+      "R2": 0.9662107784741738,
+      "n": 2360,
+      "MAPE_pct": 36.94386631521847
+    },
+    "model_path": "C:\\Users\\pc\\Downloads\\ARIAN\\models\\weather\\temperature_2m\\hgbr.joblib"
+  },
+  "wind_speed_10m": {
+    "algo": "hgbr",
+    "horizon": 1,
+    "metrics": {
+      "MAE": 2.3929707206506405,
+      "RMSE": 3.388724863142325,
+      "R2": 0.4702744183789668,
+      "n": 2360,
+      "MAPE_pct": 36.28132553459595
+    },
+    "model_path": "C:\\Users\\pc\\Downloads\\ARIAN\\models\\weather\\wind_speed_10m\\hgbr.joblib"
+  },
+  "wind_direction_10m": {
+    "algo": "hgbr",
+    "horizon": 1,
+    "metrics": {
+      "MAE": 78.25109943548723,
+      "RMSE": 93.05328435655818,
+      "R2": NaN,
+      "n": 2360,
+      "circular_MAE_deg": 78.25109943548723
+    },
+    "model_path": "C:\\Users\\pc\\Downloads\\ARIAN\\models\\weather\\wind_direction_10m\\hgbr.joblib"
+  },
+  "rain": {
+    "algo": "hgbr",
+    "horizon": 1,
+    "metrics": {
+      "MAE": 2.384596546676004,
+      "RMSE": 5.817595320484855,
+      "R2": 0.14016115730554035,
+      "n": 2360
+    },
+    "model_path": "C:\\Users\\pc\\Downloads\\ARIAN\\models\\weather\\rain\\hgbr.joblib"
+  },
+  "precipitation": {
+    "algo": "hgbr",
+    "horizon": 1,
+    "metrics": {
+      "MAE": 2.6999818909587785,
+      "RMSE": 5.9938596847369325,
+      "R2": 0.1488973971439449,
+      "n": 2360
+    },
+    "model_path": "C:\\Users\\pc\\Downloads\\ARIAN\\models\\weather\\precipitation\\hgbr.joblib"
+  }
+}
