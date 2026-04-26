@@ -1,0 +1,448 @@
+{
+  "version": "1.0",
+  "created_at": "2026-04-24T21:34:35.178930",
+  "total_features": 63,
+  "features": {
+    "temperature_2m_mean": {
+      "dtype": "float64",
+      "units": "\u00b0C",
+      "physical_meaning": "Daily mean temperature at 2m height",
+      "source_column": "temperature_2m_mean",
+      "non_null_rate": 1.0
+    },
+    "temperature_2m_min": {
+      "dtype": "float64",
+      "units": "\u00b0C",
+      "physical_meaning": "Daily minimum temperature at 2m height",
+      "source_column": "temperature_2m_min",
+      "non_null_rate": 1.0
+    },
+    "temperature_2m_max": {
+      "dtype": "float64",
+      "units": "\u00b0C",
+      "physical_meaning": "Daily maximum temperature at 2m height",
+      "source_column": "temperature_2m_max",
+      "non_null_rate": 1.0
+    },
+    "relative_humidity_2m_mean": {
+      "dtype": "float64",
+      "units": "%",
+      "physical_meaning": "Daily mean relative humidity at 2m height",
+      "source_column": "relative_humidity_2m_mean",
+      "non_null_rate": 1.0
+    },
+    "dew_point_2m_mean": {
+      "dtype": "float64",
+      "units": "\u00b0C",
+      "physical_meaning": "Daily mean dew point temperature at 2m height",
+      "source_column": "dew_point_2m_mean",
+      "non_null_rate": 1.0
+    },
+    "precipitation_sum": {
+      "dtype": "float64",
+      "units": "mm",
+      "physical_meaning": "Total daily precipitation",
+      "source_column": "precipitation_sum",
+      "non_null_rate": 1.0
+    },
+    "rain_sum": {
+      "dtype": "float64",
+      "units": "mm",
+      "physical_meaning": "Total daily rainfall (liquid precipitation)",
+      "source_column": "rain_sum",
+      "non_null_rate": 1.0
+    },
+    "cloud_cover_mean": {
+      "dtype": "float64",
+      "units": "%",
+      "physical_meaning": "Daily mean cloud cover fraction",
+      "source_column": "cloud_cover_mean",
+      "non_null_rate": 1.0
+    },
+    "vapour_pressure_deficit_mean": {
+      "dtype": "float64",
+      "units": "kPa",
+      "physical_meaning": "Daily mean vapor pressure deficit",
+      "source_column": "vapour_pressure_deficit_mean",
+      "non_null_rate": 1.0
+    },
+    "wind_speed_10m_mean": {
+      "dtype": "float64",
+      "units": "km/h",
+      "physical_meaning": "Daily mean wind speed at 10m height",
+      "source_column": "wind_speed_10m_mean",
+      "non_null_rate": 1.0
+    },
+    "wind_speed_10m_max": {
+      "dtype": "float64",
+      "units": "km/h",
+      "physical_meaning": "Daily maximum wind speed at 10m height",
+      "source_column": "wind_speed_10m_max",
+      "non_null_rate": 1.0
+    },
+    "wind_gusts_10m_max": {
+      "dtype": "float64",
+      "units": "km/h",
+      "physical_meaning": "Daily maximum wind gust at 10m height",
+      "source_column": "wind_gusts_10m_max",
+      "non_null_rate": 1.0
+    },
+    "wind_direction_10m": {
+      "dtype": "float64",
+      "units": "\u00b0",
+      "physical_meaning": "Daily mean wind direction at 10m height",
+      "source_column": "wind_direction_10m",
+      "non_null_rate": 1.0
+    },
+    "soil_temperature_0_to_7cm_mean": {
+      "dtype": "float64",
+      "units": "\u00b0C",
+      "physical_meaning": "Daily mean soil temperature 0-7cm depth",
+      "source_column": "soil_temperature_0_to_7cm_mean",
+      "non_null_rate": 1.0
+    },
+    "sunshine_duration_sum": {
+      "dtype": "float64",
+      "units": "hours",
+      "physical_meaning": "Total daily sunshine duration",
+      "source_column": "sunshine_duration_sum",
+      "non_null_rate": 1.0
+    },
+    "shortwave_radiation_mean": {
+      "dtype": "float64",
+      "units": "W/m\u00b2",
+      "physical_meaning": "Daily mean shortwave radiation",
+      "source_column": "shortwave_radiation_mean",
+      "non_null_rate": 1.0
+    },
+    "dry_days_run": {
+      "dtype": "int16",
+      "units": "days",
+      "physical_meaning": "Consecutive days with rain < 1mm",
+      "source_column": "dry_days_run",
+      "non_null_rate": 1.0
+    },
+    "drought_index": {
+      "dtype": "float32",
+      "units": "KBDI-like",
+      "physical_meaning": "Cumulative temperature \u00d7 (1-rain/10), resets on wet days",
+      "source_column": "drought_index",
+      "non_null_rate": 1.0
+    },
+    "hot_day": {
+      "dtype": "int8",
+      "units": "binary",
+      "physical_meaning": "1 if temperature \u2265 local 90th percentile",
+      "source_column": "hot_day",
+      "non_null_rate": 1.0
+    },
+    "heatwave_active": {
+      "dtype": "int8",
+      "units": "binary",
+      "physical_meaning": "1 if part of \u22653 consecutive hot days",
+      "source_column": "heatwave_active",
+      "non_null_rate": 1.0
+    },
+    "dir_persistence": {
+      "dtype": "float32",
+      "units": "0-1",
+      "physical_meaning": "Wind direction persistence (1=steady, 0=variable)",
+      "source_column": "dir_persistence",
+      "non_null_rate": 1.0
+    },
+    "wind_spread": {
+      "dtype": "float32",
+      "units": "km/h",
+      "physical_meaning": "Wind speed \u00d7 direction persistence",
+      "source_column": "wind_spread",
+      "non_null_rate": 1.0
+    },
+    "ffmc": {
+      "dtype": "float32",
+      "units": "index",
+      "physical_meaning": "Fine Fuel Moisture Code - surface litter moisture (0-101)",
+      "source_column": "ffmc",
+      "non_null_rate": 1.0
+    },
+    "dmc": {
+      "dtype": "float32",
+      "units": "index",
+      "physical_meaning": "Duff Moisture Code - organic layer moisture (0-500+)",
+      "source_column": "dmc",
+      "non_null_rate": 1.0
+    },
+    "dc": {
+      "dtype": "float32",
+      "units": "index",
+      "physical_meaning": "Drought Code - deep layer moisture (0-2000+)",
+      "source_column": "dc",
+      "non_null_rate": 1.0
+    },
+    "isi": {
+      "dtype": "float32",
+      "units": "index",
+      "physical_meaning": "Initial Spread Index - expected fire spread rate (0+)",
+      "source_column": "isi",
+      "non_null_rate": 1.0
+    },
+    "bui": {
+      "dtype": "float32",
+      "units": "index",
+      "physical_meaning": "Buildup Index - total fuel available (0+)",
+      "source_column": "bui",
+      "non_null_rate": 1.0
+    },
+    "fwi": {
+      "dtype": "float32",
+      "units": "index",
+      "physical_meaning": "Fire Weather Index - overall fire intensity (0+)",
+      "source_column": "fwi",
+      "non_null_rate": 1.0
+    },
+    "temperature_2m_max_lag_1d": {
+      "dtype": "float64",
+      "units": "unknown",
+      "physical_meaning": "No description available",
+      "source_column": "temperature_2m_max_lag_1d",
+      "non_null_rate": 0.9995652173913043
+    },
+    "temperature_2m_max_lag_3d": {
+      "dtype": "float64",
+      "units": "unknown",
+      "physical_meaning": "No description available",
+      "source_column": "temperature_2m_max_lag_3d",
+      "non_null_rate": 0.9986956521739131
+    },
+    "temperature_2m_max_lag_7d": {
+      "dtype": "float64",
+      "units": "unknown",
+      "physical_meaning": "No description available",
+      "source_column": "temperature_2m_max_lag_7d",
+      "non_null_rate": 0.9969565217391304
+    },
+    "temperature_2m_mean_lag_1d": {
+      "dtype": "float64",
+      "units": "unknown",
+      "physical_meaning": "No description available",
+      "source_column": "temperature_2m_mean_lag_1d",
+      "non_null_rate": 0.9995652173913043
+    },
+    "temperature_2m_mean_lag_3d": {
+      "dtype": "float64",
+      "units": "unknown",
+      "physical_meaning": "No description available",
+      "source_column": "temperature_2m_mean_lag_3d",
+      "non_null_rate": 0.9986956521739131
+    },
+    "temperature_2m_mean_lag_7d": {
+      "dtype": "float64",
+      "units": "unknown",
+      "physical_meaning": "No description available",
+      "source_column": "temperature_2m_mean_lag_7d",
+      "non_null_rate": 0.9969565217391304
+    },
+    "rain_sum_lag_1d": {
+      "dtype": "float64",
+      "units": "unknown",
+      "physical_meaning": "No description available",
+      "source_column": "rain_sum_lag_1d",
+      "non_null_rate": 0.9995652173913043
+    },
+    "rain_sum_lag_3d": {
+      "dtype": "float64",
+      "units": "unknown",
+      "physical_meaning": "No description available",
+      "source_column": "rain_sum_lag_3d",
+      "non_null_rate": 0.9986956521739131
+    },
+    "rain_sum_lag_7d": {
+      "dtype": "float64",
+      "units": "unknown",
+      "physical_meaning": "No description available",
+      "source_column": "rain_sum_lag_7d",
+      "non_null_rate": 0.9969565217391304
+    },
+    "relative_humidity_2m_mean_lag_1d": {
+      "dtype": "float64",
+      "units": "unknown",
+      "physical_meaning": "No description available",
+      "source_column": "relative_humidity_2m_mean_lag_1d",
+      "non_null_rate": 0.9995652173913043
+    },
+    "relative_humidity_2m_mean_lag_3d": {
+      "dtype": "float64",
+      "units": "unknown",
+      "physical_meaning": "No description available",
+      "source_column": "relative_humidity_2m_mean_lag_3d",
+      "non_null_rate": 0.9986956521739131
+    },
+    "relative_humidity_2m_mean_lag_7d": {
+      "dtype": "float64",
+      "units": "unknown",
+      "physical_meaning": "No description available",
+      "source_column": "relative_humidity_2m_mean_lag_7d",
+      "non_null_rate": 0.9969565217391304
+    },
+    "wind_speed_10m_mean_lag_1d": {
+      "dtype": "float64",
+      "units": "unknown",
+      "physical_meaning": "No description available",
+      "source_column": "wind_speed_10m_mean_lag_1d",
+      "non_null_rate": 0.9995652173913043
+    },
+    "wind_speed_10m_mean_lag_3d": {
+      "dtype": "float64",
+      "units": "unknown",
+      "physical_meaning": "No description available",
+      "source_column": "wind_speed_10m_mean_lag_3d",
+      "non_null_rate": 0.9986956521739131
+    },
+    "wind_speed_10m_mean_lag_7d": {
+      "dtype": "float64",
+      "units": "unknown",
+      "physical_meaning": "No description available",
+      "source_column": "wind_speed_10m_mean_lag_7d",
+      "non_null_rate": 0.9969565217391304
+    },
+    "temperature_2m_max_roll_7d_mean": {
+      "dtype": "float64",
+      "units": "unknown",
+      "physical_meaning": "No description available",
+      "source_column": "temperature_2m_max_roll_7d_mean",
+      "non_null_rate": 0.9999130434782608
+    },
+    "temperature_2m_max_roll_7d_std": {
+      "dtype": "float64",
+      "units": "unknown",
+      "physical_meaning": "No description available",
+      "source_column": "temperature_2m_max_roll_7d_std",
+      "non_null_rate": 0.9998260869565218
+    },
+    "temperature_2m_mean_roll_7d_mean": {
+      "dtype": "float64",
+      "units": "unknown",
+      "physical_meaning": "No description available",
+      "source_column": "temperature_2m_mean_roll_7d_mean",
+      "non_null_rate": 0.9999130434782608
+    },
+    "temperature_2m_mean_roll_7d_std": {
+      "dtype": "float64",
+      "units": "unknown",
+      "physical_meaning": "No description available",
+      "source_column": "temperature_2m_mean_roll_7d_std",
+      "non_null_rate": 0.9998260869565218
+    },
+    "rain_sum_roll_7d_mean": {
+      "dtype": "float64",
+      "units": "unknown",
+      "physical_meaning": "No description available",
+      "source_column": "rain_sum_roll_7d_mean",
+      "non_null_rate": 0.9999130434782608
+    },
+    "rain_sum_roll_7d_std": {
+      "dtype": "float64",
+      "units": "unknown",
+      "physical_meaning": "No description available",
+      "source_column": "rain_sum_roll_7d_std",
+      "non_null_rate": 0.9998260869565218
+    },
+    "relative_humidity_2m_mean_roll_7d_mean": {
+      "dtype": "float64",
+      "units": "unknown",
+      "physical_meaning": "No description available",
+      "source_column": "relative_humidity_2m_mean_roll_7d_mean",
+      "non_null_rate": 0.9999130434782608
+    },
+    "relative_humidity_2m_mean_roll_7d_std": {
+      "dtype": "float64",
+      "units": "unknown",
+      "physical_meaning": "No description available",
+      "source_column": "relative_humidity_2m_mean_roll_7d_std",
+      "non_null_rate": 0.9998260869565218
+    },
+    "wind_speed_10m_mean_roll_7d_mean": {
+      "dtype": "float64",
+      "units": "unknown",
+      "physical_meaning": "No description available",
+      "source_column": "wind_speed_10m_mean_roll_7d_mean",
+      "non_null_rate": 0.9999130434782608
+    },
+    "wind_speed_10m_mean_roll_7d_std": {
+      "dtype": "float64",
+      "units": "unknown",
+      "physical_meaning": "No description available",
+      "source_column": "wind_speed_10m_mean_roll_7d_std",
+      "non_null_rate": 0.9998260869565218
+    },
+    "weighted_dry_streak": {
+      "dtype": "float32",
+      "units": "\u6307\u6570",
+      "physical_meaning": "Exponentially weighted dry streak (half-life=5 days)",
+      "source_column": "weighted_dry_streak",
+      "non_null_rate": 1.0
+    },
+    "ndvi": {
+      "dtype": "float64",
+      "units": "index",
+      "physical_meaning": "Normalized Difference Vegetation Index (-1 to 1)",
+      "source_column": "ndvi",
+      "non_null_rate": 1.0
+    },
+    "ndvi_anomaly": {
+      "dtype": "float64",
+      "units": "index",
+      "physical_meaning": "NDVI deviation from DOY climatology",
+      "source_column": "ndvi_anomaly",
+      "non_null_rate": 1.0
+    },
+    "human_access_road_meters": {
+      "dtype": "float64",
+      "units": "m/km\u00b2",
+      "physical_meaning": "Road density per grid cell",
+      "source_column": "human_access_road_meters",
+      "non_null_rate": 1.0
+    },
+    "pop_density": {
+      "dtype": "float64",
+      "units": "people/km\u00b2",
+      "physical_meaning": "Population density",
+      "source_column": "pop_density",
+      "non_null_rate": 1.0
+    },
+    "human_activity_score": {
+      "dtype": "float32",
+      "units": "z-score",
+      "physical_meaning": "Combined human activity proxy (log roads \u00d7 log pop)",
+      "source_column": "human_activity_score",
+      "non_null_rate": 1.0
+    },
+    "lightning_thunder_hours": {
+      "dtype": "float64",
+      "units": "hours/month",
+      "physical_meaning": "Monthly thunder-hour climatology",
+      "source_column": "lightning_thunder_hours",
+      "non_null_rate": 0.9261739130434783
+    },
+    "month": {
+      "dtype": "int8",
+      "units": "month",
+      "physical_meaning": "Calendar month (1-12)",
+      "source_column": "month",
+      "non_null_rate": 1.0
+    },
+    "doy": {
+      "dtype": "int16",
+      "units": "day",
+      "physical_meaning": "Day of year (1-366)",
+      "source_column": "doy",
+      "non_null_rate": 1.0
+    },
+    "year": {
+      "dtype": "int16",
+      "units": "year",
+      "physical_meaning": "Calendar year",
+      "source_column": "year",
+      "non_null_rate": 1.0
+    }
+  }
+}
