@@ -12,7 +12,7 @@ ARIAN (Azerbaijani Risk Intelligence and Analysis Network) is a production-grade
 - **Seasonal climate anomaly detection** (rising temperatures, shifting rainfall, drought trends)
 - **REST API + web dashboard** for operational use
 
-**v3.1 Status:** Core dataset assembly is complete. Open-Meteo weather, NASA FIRMS fire hotspots, ESA WorldCover land cover, WorldPop population density, OSM road network, official Azerbaijan forest boundary (Azerbaycan.kmz, 43 MB), and the Azerbaijani State Forest Management Inventory (MESE QURULUSU LAYIHE SON) have all been collected. ERA5-Land, SMAP, MODIS vegetation indices, SRTM terrain, and lightning climatology are the remaining Tier 1/2 acquisitions.
+Core dataset assembly is complete. Open-Meteo weather, NASA FIRMS fire hotspots, ESA WorldCover land cover, WorldPop population density, OSM road network, official Azerbaijan forest boundary (Azerbaycan.kmz, 43 MB), and the Azerbaijani State Forest Management Inventory (MESE QURULUSU LAYIHE SON) have all been collected. ERA5-Land, SMAP, MODIS vegetation indices, SRTM terrain, and lightning climatology are the remaining Tier 1/2 acquisitions.
 
 The system is built around a strict directional dependency: weather feeds climate analysis, and climate feeds wildfire prediction. All uncertainty propagates in one direction and no circular dependencies exist in the pipeline.
 
