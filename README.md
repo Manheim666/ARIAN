@@ -74,11 +74,11 @@ Runs identically on **Google Colab** and **local environments** (JupyterLab / VS
 | **3** | EDA & Feature Engineering | Per-city quality audit, descriptive statistics, distribution analysis | Ilaha, Nurana |
 | **4** | EDA & Feature Engineering | Correlation analysis, seasonal decomposition, fire-weather comparison (t-tests) | Ilaha, Nurana, Aysu |
 | **5** | Feature Engineering | FWI indices, lag/rolling features, calendar encodings; `engineered_daily.parquet` finalized | Ilaha, Nurana |
-| **6** | ML — Weather Forecasting | Prophet + SARIMA + XGBoost stacking ensemble per city; `phase3_weather_hourly_30d.parquet` | Aysu |
+| **6** | ML — Weather Forecasting | Prophet + SARIMA + XGBoost stacking ensemble per city; `phase3_weather_hourly_30d.parquet` | Aysu, Asif |
 | **7** | ML — Wildfire Prediction | XGBoost fire classifier, isotonic calibration, evaluation metrics | Asif, Aysu |
 | **8** | Hypothesis Testing & Visualization | Automated hypothesis generation, Folium risk maps, Plotly dashboards | Aysu, Asif |
 | **9** | Integration & Presentation Prep | End-to-end pipeline validation, slide deck design, narrative drafting | All team |
-| **10** | **Presentation** | Final rehearsal and delivery | All team (Raul leads) |
+| **10** | **Presentation** | Final rehearsal and delivery | All team |
 
 ---
 
