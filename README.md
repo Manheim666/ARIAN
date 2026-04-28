@@ -183,7 +183,7 @@ Runs identically on **Google Colab** and **local environments** (JupyterLab / VS
 ## 6. Folder Structure
 
 ```
-ARIAN_ASIF/
+ARIAN_ROOT/
 ├── notebooks/                            Run in order: 01 → 02 → 03 → 04
 │   ├── 01_Data_Ingestion.ipynb           Phase 1 — Data collection & unification
 │   ├── 02_Weather_Forecasting.ipynb      Phase 2 — EDA & feature engineering
