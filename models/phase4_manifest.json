@@ -1,5 +1,5 @@
 {
-  "trained_at": "2026-04-27T18:02:39.924841+00:00",
+  "trained_at": "2026-04-27T22:16:11.454728+00:00",
   "feature_order": [
     "Temperature_C",
     "Humidity_percent",
@@ -35,13 +35,13 @@
     "dry_streak",
     "humid_roll24_min"
   ],
-  "operational_threshold": 0.2539086937904358,
+  "operational_threshold": 0.2375168651342392,
   "test_metrics": {
-    "PR_AUC": 0.3281,
-    "ROC_AUC": 0.799,
-    "F1": 0.3888,
-    "Precision": 0.3922,
-    "Recall": 0.3854,
-    "Threshold": 0.2539
+    "PR_AUC": 0.3257,
+    "ROC_AUC": 0.8056,
+    "F1": 0.3786,
+    "Precision": 0.2991,
+    "Recall": 0.5156,
+    "Threshold": 0.2375
   }
 }
