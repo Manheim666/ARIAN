@@ -1,3 +1,2 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:8fbfdb4c3937198c77cde0cd6ac20e87657ed46994ac847d197d8415155f44ec
-size 112
+model,PR_AUC,ROC_AUC,F1,Precision,Recall,Threshold
+XGB (cal + op-thr),0.3257,0.8056,0.3786,0.2991,0.5156,0.2375

@@ -1,3 +1,31 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:a6a99d094c3bf38799a337a45c03d9552e51d72d11e1d19b202556557ccb2c5d
-size 1359
+Feature,Model,RMSE_mean,RMSE_std,MAE_mean,MAE_std
+Dew_Point_C,prophet,2.707,0.828,2.073,0.567
+Dew_Point_C,sarima,2.774,0.61,2.243,0.548
+Dew_Point_C,seasonal,3.686,0.826,2.952,0.662
+Dew_Point_C,stack,2.912,0.885,2.337,0.737
+Dew_Point_C,xgboost,2.756,0.64,2.186,0.486
+Humidity_percent,prophet,14.67,2.669,12.567,2.6
+Humidity_percent,sarima,12.94,4.1,10.51,3.538
+Humidity_percent,seasonal,17.384,2.307,14.408,2.505
+Humidity_percent,stack,13.714,2.516,11.663,2.199
+Humidity_percent,xgboost,17.295,2.763,15.09,2.735
+Rain_mm,prophet,0.306,0.209,0.119,0.081
+Rain_mm,sarima,0.31,0.203,0.153,0.092
+Rain_mm,seasonal,0.339,0.225,0.112,0.082
+Rain_mm,stack,0.307,0.208,0.132,0.087
+Rain_mm,xgboost,0.308,0.209,0.13,0.081
+Temperature_C,prophet,3.159,0.768,2.642,0.735
+Temperature_C,sarima,3.307,0.85,2.653,0.778
+Temperature_C,seasonal,5.672,1.039,5.094,1.013
+Temperature_C,stack,2.833,0.674,2.288,0.639
+Temperature_C,xgboost,4.156,0.474,3.643,0.443
+VPD_kPa,prophet,0.354,0.085,0.286,0.074
+VPD_kPa,sarima,0.288,0.12,0.214,0.09
+VPD_kPa,seasonal,0.521,0.128,0.421,0.11
+VPD_kPa,stack,0.274,0.056,0.224,0.045
+VPD_kPa,xgboost,0.49,0.122,0.439,0.109
+Wind_Speed_kmh,prophet,7.313,2.702,5.452,2.06
+Wind_Speed_kmh,sarima,6.995,2.57,5.264,1.966
+Wind_Speed_kmh,seasonal,6.913,2.423,5.403,1.988
+Wind_Speed_kmh,stack,6.811,2.491,5.161,1.933
+Wind_Speed_kmh,xgboost,7.085,2.476,5.433,1.881

@@ -1,3 +1,28 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:f68a4af9b0cba414741a10c3878e3a6ae1c999ced0accf2ea41ff81f48962fa9
-size 406
+feature,gain
+Temperature_C_max,0.0
+Humidity_percent_min,0.0
+Wind_Speed_kmh_max,0.0
+Rain_mm_sum,0.0
+FFMC,0.0
+DMC,0.0
+DC,0.0
+ISI,0.0
+BUI,0.0
+FWI,0.0
+is_dry_day,0.0
+dry_spell_days,0.0
+rolling_30_rain,0.0
+rolling_7_temp_max,0.0
+rolling_7_humidity_min,0.0
+Elevation,0.0
+Slope,0.0
+Latitude,0.0
+Longitude,0.0
+Trees_pct,0.0
+Urban_pct,0.0
+Pop_Total,0.0
+dayofyear,0.0
+month,0.0
+doy_sin,0.0
+doy_cos,0.0
+is_summer,0.0

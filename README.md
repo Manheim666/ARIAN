@@ -20,12 +20,6 @@ Runs identically on **Google Colab** and **local environments** (JupyterLab / VS
 9. [Cities Covered](#9-cities-covered)
 10. [Data Sources & Provenance](#10-data-sources--provenance)
 11. [Key Outputs & Deliverables](#11-key-outputs--deliverables)
-12. [Dataset Catalog](#12-dataset-catalog)
-13. [Feature Definitions](#13-feature-definitions)
-14. [Model Inventory & Performance Targets](#14-model-inventory--performance-targets)
-15. [Evaluation Protocol](#15-evaluation-protocol)
-16. [Glossary](#16-glossary)
-17. [Repository State](#17-repository-state)
 
 ---
 
@@ -183,7 +177,7 @@ Runs identically on **Google Colab** and **local environments** (JupyterLab / VS
 ## 6. Folder Structure
 
 ```
-ARIAN_ROOT/
+ARIAN_ASIF/
 ├── notebooks/                            Run in order: 01 → 02 → 03 → 04
 │   ├── 01_Data_Ingestion.ipynb           Phase 1 — Data collection & unification
 │   ├── 02_Weather_Forecasting.ipynb      Phase 2 — EDA & feature engineering
@@ -204,7 +198,6 @@ ARIAN_ROOT/
 │
 ├── outputs/                              All pipeline artefacts (.csv/.parquet/.html)
 ├── models/                               Trained models + manifests (.joblib/.json)
-├── app/                                  FastAPI service — exposes 30-day risk forecast via REST
 └── README.md
 ```
 
@@ -357,166 +350,6 @@ Fire labels are aggregated daily within a **20 km radius** of each city centroid
 | `outputs/phase4_wildfire_scores.csv` | PR-AUC, ROC-AUC, F1, Precision, Recall |
 | `outputs/phase4_hypotheses.csv` | 5 automated climate-vs-fire hypotheses |
 | `outputs/phase4_feature_importance.csv` | Feature importance ranking (gain-based) |
-
----
-
----
-
-## 12. Dataset Catalog
-
-| Dataset | File | Rows | Columns | Status | Produced By |
-|---------|------|------|---------|--------|-------------|
-| Master daily weather + fire labels | `data/processed/master_daily.parquet` | 36,928 | 29 | ✅ Available | NB1 |
-| Raw hourly weather observations | `data/raw/weather_hourly.parquet` | 886K+ | ~15 | ✅ Available | NB1 |
-| Daily fire occurrence labels | `data/processed/fires_daily.parquet` | 4,536 | 3 | ✅ Available | NB1 |
-| Static city geography | `data/reference/static_geography.parquet` | 16 | ~10 | ✅ Available | NB1 |
-| Engineered feature set (daily) | `data/processed/engineered_daily.parquet` | 83,392 | 90 | ✅ Processed | NB2 |
-| 30-day hourly weather forecast | `outputs/phase3_weather_hourly_30d.parquet` | 11,520 | ~15 | ✅ Processed | NB3 |
-| 30-day hourly wildfire risk scores | `outputs/phase4_wildfire_hourly_30d.parquet` | 11,520 | ~10 | ✅ Processed | NB4 |
-| NASA FIRMS sensor archives (raw CSVs) | `data/raw/firms/` | — | — | ✅ Available | External |
-
-
----
-
-## 13. Feature Definitions
-
-### Weather Features (NB1 → NB3)
-
-| Source | Feature Name | Unit | Aggregation |
-|--------|-------------|------|-------------|
-| Open-Meteo Archive | `Temperature_C` | °C | Hourly instantaneous |
-| Open-Meteo Archive | `Humidity_percent` | % | Hourly instantaneous |
-| Open-Meteo Archive | `Rain_mm` | mm | Hourly accumulation |
-| Open-Meteo Archive | `Wind_Speed_kmh` | km/h | Hourly instantaneous |
-| Open-Meteo Archive | `Wind_Direction_deg` | ° | Hourly instantaneous |
-| Open-Meteo Archive | `Pressure_hPa` | hPa | Hourly instantaneous |
-| Open-Meteo Archive | `Solar_Radiation_Wm2` | W/m² | Hourly mean |
-| Open-Meteo Archive | `Soil_Temp_C` | °C | Hourly instantaneous |
-| Open-Meteo Archive | `Soil_Moisture` | m³/m³ | Hourly instantaneous |
-
-### FWI-Family Features (NB2 → NB4)
-
-| Source | Feature Name | Unit | Aggregation |
-|--------|-------------|------|-------------|
-| Computed (Canadian FWI system) | `FFMC` | index (0–101) | Daily |
-| Computed (Canadian FWI system) | `DMC` | index | Daily cumulative |
-| Computed (Canadian FWI system) | `DC` | index | Daily cumulative |
-| Computed (Canadian FWI system) | `ISI` | index | Daily |
-| Computed (Canadian FWI system) | `BUI` | index | Daily |
-| Computed (Canadian FWI system) | `FWI` | index | Daily |
-| Derived | `FFMC_h` | index (0–101) | Hourly approximation |
-| Derived | `ISI_h` | index | Hourly approximation |
-
-### Engineered Temporal & Rolling Features (NB2)
-
-| Source | Feature Name | Unit | Aggregation |
-|--------|-------------|------|-------------|
-| Derived | `lag_{1–14d}_<feature>` | native | Daily lag |
-| Derived | `roll7_mean_<feature>` | native | 7-day rolling mean |
-| Derived | `roll14_mean_<feature>` | native | 14-day rolling mean |
-| Derived | `roll30_mean_<feature>` | native | 30-day rolling mean |
-| Derived | `temp_roll24_mean` | °C | 24-hour rolling mean |
-| Derived | `rain_roll24_sum` | mm | 24-hour rolling sum |
-| Derived | `rain_roll168_sum` | mm | 7-day rolling sum |
-| Derived | `dry_streak` | hours | Consecutive dry hours |
-| Derived | `hour_sin` / `hour_cos` | — | Cyclical encoding (24 h) |
-| Derived | `doy_sin` / `doy_cos` | — | Cyclical encoding (365 d) |
-| Derived | `is_summer` | binary | Months 6–9 flag |
-| Derived | `is_daytime` | binary | Hours 6–20 flag |
-
-### Static Geography Features (NB1)
-
-| Source | Feature Name | Unit | Aggregation |
-|--------|-------------|------|-------------|
-| Open-Elevation API | `Elevation_m` | m | Point estimate |
-| Derived | `Slope_deg` | ° | 4-neighbour 1 km DEM cross |
-| Supplementary CSV | `Land_Cover_pct` | % | Static per-city |
-| Supplementary CSV | `Urban_pct` | % | Static per-city |
-| Supplementary CSV | `Population` | count | Static per-city |
-
----
-
-## 14. Model Inventory & Performance Targets
-
-### Weather Forecasting Models (NB3)
-
-Three component models are trained per city per feature (up to 144 bundles: 16 cities × 9 features), then combined into a stacking ensemble:
-
-| Model | Description | Performance Target |
-|-------|-------------|-------------------|
-| **Prophet** | Yearly/weekly/daily seasonality + Azerbaijan holidays | RMSE < 2.0 °C (temperature) |
-| **SARIMA** (1,0,1)(1,1,1,24) | 6-hourly downsampled for tractability | Converges on ≥ 90% of city-feature pairs |
-| **XGBoost** | Recursive multi-step with lag/rolling features | MAE competitive with Prophet baseline |
-| **Seasonal baseline** | Harmonic seasonal decomposition | Benchmark for ensemble weighting |
-| **Stacking ensemble** | Non-negative SLSQP weight optimisation on 7-day validation window | Best RMSE across all 4 component models |
-
-### Wildfire Prediction Model (NB4)
-
-| Model | Description | Performance Target |
-|-------|-------------|-------------------|
-| **XGBoost classifier** | 1,500 estimators, early stopping, `scale_pos_weight` for class imbalance | PR-AUC ≥ 0.40 |
-| **Isotonic calibration** (`FrozenEstimator`) | Post-hoc probability calibration | ECE < 0.05 |
-| **Operational threshold** | Max-F1 threshold on validation set; stored in `phase4_manifest.json` | Recall ≥ 0.60 at operational threshold |
-
-> Training data: 2M+ hourly observations across 16 cities (2012–present). Class prevalence: ~10% fire-day hours.
-
----
-
-## 15. Evaluation Protocol
-
-### Weather Forecasting (NB3)
-
-| Aspect | Detail |
-|--------|--------|
-| **Split** | Last 7 days held out as test; preceding 7 days used as validation window for stacking weight optimisation |
-| **Primary metrics** | RMSE, MAE per city per feature |
-| **Secondary output** | Per-feature model leaderboard saved to `outputs/phase3_weather_leaderboard.csv` |
-| **Validation strategy** | Time-respecting; no future data used during stacking weight fitting |
-| **Fallback handling** | SARIMA convergence failures fall back to the seasonal baseline; logged gracefully |
-
-### Wildfire Prediction (NB4)
-
-| Aspect | Detail |
-|--------|--------|
-| **Split** | 85% train / 15% test by timestamp quantile (time-respecting; no random shuffle) |
-| **Primary metric** | **PR-AUC** — preferred over accuracy and ROC-AUC given ~10% positive-class prevalence |
-| **Secondary metrics** | ROC-AUC, F1, Precision, Recall at the operational threshold |
-| **Threshold selection** | Max-F1 on held-out validation subset; stored in `phase4_manifest.json` for reproducibility |
-| **Note on accuracy** | Accuracy is misleading at ~10% fire-day prevalence; use PR-AUC and threshold-specific recall instead |
-| **Results file** | `outputs/phase4_wildfire_scores.csv` |
-
----
-
-## 16. Glossary
-
-| Term | Definition |
-|------|-----------|
-| **FWI** | Fire Weather Index — the Canadian Forest Fire Weather Index System's composite danger rating, integrating fuel moisture codes and fire behaviour indicators |
-| **FFMC** | Fine Fuel Moisture Code — moisture content of litter and fine fuels; high values indicate high ignitability |
-| **DMC** | Duff Moisture Code — moisture of loosely-compacted organic layers; proxy for moderate-depth fuel moisture |
-| **DC** | Drought Code — deep organic layer moisture content; reflects long-term drought effects on heavy fuels |
-| **ISI** | Initial Spread Index — expected rate of fire spread, combining wind speed and FFMC |
-| **BUI** | Buildup Index — total fuel available for combustion; combines DMC and DC |
-| **DSR** | Daily Severity Rating — a derived FWI measure used for multi-day fire danger averaging |
-| **SPEI** | Standardised Precipitation-Evapotranspiration Index — multi-scalar drought index accounting for temperature-driven evapotranspiration; planned for a future pipeline version |
-| **FIRMS** | Fire Information for Resource Management System — NASA near-real-time satellite active fire detection product (MODIS & VIIRS sensors) |
-| **NDWI** | Normalised Difference Water Index — satellite-derived index for surface water and vegetation moisture content; planned for a future pipeline version |
-| **MODIS C6.1** | Moderate Resolution Imaging Spectroradiometer Collection 6.1 — 1 km resolution NASA fire detection product |
-| **VIIRS C2** | Visible Infrared Imaging Radiometer Suite Collection 2 — 375 m resolution fire detection product (Suomi-NPP, NOAA-20/J1, NOAA-21/J2) |
-| **PR-AUC** | Precision-Recall Area Under Curve — primary classifier evaluation metric; robust to class imbalance |
-| **SLSQP** | Sequential Least Squares Programming — optimisation algorithm used for non-negative stacking weight fitting in NB3 |
-| **ERA5-Land** | ECMWF Reanalysis v5 Land — the reanalysis product underlying Open-Meteo's historical weather archive |
-| **ECE** | Expected Calibration Error — measures how well predicted probabilities match empirical fire-day frequencies |
-
----
-
-## 17. Repository State
-
-| Item | Status |
-|------|--------|
-| `data_ingestion` branch | **Pending merge into `main`** — contains the finalised NB1 data ingestion pipeline. Must be merged before running the full pipeline from a fresh clone. |
-| `main` branch | Reflects Phases 2–4; NB1 outputs (`master_daily.parquet`, `weather_hourly.parquet`, etc.) must be present before executing NB2–NB4. |
-| FastAPI application | A `app/` folder exists in the repository root containing a FastAPI service that exposes the 30-day risk forecast via REST endpoints. It is independent of the notebook pipeline and requires Phase 4 outputs to be present. |
 
 ---
 

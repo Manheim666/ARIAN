@@ -1,3 +1,13 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:85a3c9bc12612bcbe911c913a59ef6feaa3d53538b8d725ad0c06d73c00d388b
-size 590
+Target,Model,RMSE_mean,RMSE_std,MAE_mean,MAE_std
+Humidity_percent_min,lgbm,17.295,7.962,14.462,7.915
+Humidity_percent_min,prophet,11.831,1.664,9.398,1.404
+Humidity_percent_min,sarima,12.174,2.396,9.894,2.225
+Humidity_percent_min,stack,11.92,2.063,9.468,1.749
+Rain_mm_sum,lgbm,0.0,0.0,0.0,0.0
+Rain_mm_sum,prophet,0.0,0.0,0.0,0.0
+Rain_mm_sum,sarima,0.0,0.0,0.0,0.0
+Rain_mm_sum,stack,0.0,0.0,0.0,0.0
+Temperature_C_max,lgbm,4.256,0.592,3.517,0.393
+Temperature_C_max,prophet,3.159,0.505,2.551,0.413
+Temperature_C_max,sarima,9.789,1.285,8.981,1.309
+Temperature_C_max,stack,3.157,0.506,2.55,0.414

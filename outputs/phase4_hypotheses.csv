@@ -1,3 +1,6 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:763fc9f3a16ee917d1660733f08ae661c7aaff18cb2b1d51a5d76475f5d4ba7e
-size 649
+Hypothesis,Result,Avg_difference,Conclusion
+Projected 30-day rainfall vs. same window last year,0/16 cities projected to be drier,+56.4 mm,NOT drier
+Projected 30-day rainfall vs. last-decade average (same window),11/16 cities projected drier than decade avg,-6.0 mm,DRIER than decade
+Will wildfire frequency increase vs. historical average?,1/16 cities projected to have more fire days,-0.1 fire-days,No general increase expected
+Projected temperature vs. same window last year,0/16 cities projected hotter,-7.3 °C,NOT hotter
+Projected humidity vs. decade average (lower = drier air),0/16 cities have lower predicted humidity,+23.5 %,NOT drier air
