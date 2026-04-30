@@ -508,8 +508,8 @@ Fire labels are aggregated daily within a **20 km radius** of each city centroid
 
 | Metric | Target | Rationale |
 |--------|--------|-----------|
-| **Recall** | ≥ 0.70 | Missing a real fire is far worse than a false alarm |
-| **Precision** | ≥ 0.10 | Floor to prevent degenerate "predict all fire" models |
+| **Recall** | ≥ 0.60 | Missing a real fire is far worse than a false alarm |
+| **Precision** | ≥ 0.30 | Floor to prevent degenerate "predict all fire" models |
 | **F1** | Maximize | Harmonic mean balancing recall and precision |
 | **PR-AUC** | ≥ 0.20 | Primary ranking metric for imbalanced classification |
 | **Overfit gap** | < 0.15 | Train-vs-val F1 difference; models exceeding this are flagged |
