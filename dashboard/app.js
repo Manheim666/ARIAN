@@ -17,8 +17,8 @@ const fmtOne = (value) => Number(value).toFixed(1);
 
 async function loadData() {
   const [forecastResponse, metricsResponse] = await Promise.all([
-    fetch("../outputs/forecast_30_days.json"),
-    fetch("../outputs/metrics.json"),
+    fetch("./data/forecast_30_days.json"),
+    fetch("./data/metrics.json"),
   ]);
   forecast = await forecastResponse.json();
   metrics = await metricsResponse.json();
