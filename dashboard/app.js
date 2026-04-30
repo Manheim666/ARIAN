@@ -40,8 +40,11 @@ function initializeControls() {
   document.getElementById("tableDateFilter").max = dates[dates.length - 1];
 
   const regionSelect = document.getElementById("regionSelect");
+  const panelRegionSelect = document.getElementById("panelRegionSelect");
   regionSelect.innerHTML = regions.map((r) => `<option value="${r}">${r}</option>`).join("");
+  panelRegionSelect.innerHTML = regionSelect.innerHTML;
   regionSelect.value = selectedRegion;
+  panelRegionSelect.value = selectedRegion;
 
   document.getElementById("datePicker").addEventListener("change", (event) => {
     selectedDate = event.target.value;
@@ -49,6 +52,12 @@ function initializeControls() {
   });
   regionSelect.addEventListener("change", (event) => {
     selectedRegion = event.target.value;
+    panelRegionSelect.value = selectedRegion;
+    renderAll();
+  });
+  panelRegionSelect.addEventListener("change", (event) => {
+    selectedRegion = event.target.value;
+    regionSelect.value = selectedRegion;
     renderAll();
   });
   document.getElementById("riskFilter").addEventListener("change", renderTable);
@@ -129,6 +138,7 @@ function renderMap() {
     const selectRegion = () => {
       selectedRegion = row.region;
       document.getElementById("regionSelect").value = row.region;
+      document.getElementById("panelRegionSelect").value = row.region;
       renderAll();
     };
     marker.on("click", selectRegion);
@@ -144,10 +154,11 @@ function renderPanel() {
   document.getElementById("riskLevel").textContent = row.risk_level;
   document.getElementById("riskScore").textContent = fmtPct(row.probability);
   document.getElementById("riskBand").style.background = riskColors[row.risk_level];
+  document.getElementById("panelRegionSelect").value = row.region;
   document.getElementById("panelTemp").textContent = `${fmtOne(row.temperature)} C`;
   document.getElementById("panelWind").textContent = `${fmtOne(row.wind)} km/h`;
   document.getElementById("panelHumidity").textContent = `${fmtOne(row.humidity)}%`;
-  document.getElementById("panelConfidence").textContent = fmtPct(row.confidence);
+  document.getElementById("panelRain").textContent = `${Number(row.rain).toFixed(2)} mm`;
   document.getElementById("panelSummary").textContent = row.climate_summary;
   document.getElementById("panelWarning").textContent = row.warning;
 

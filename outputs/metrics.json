@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-30T16:20:35.501015+04:00",
+  "generated_at": "2026-04-30T22:21:47.440488+04:00",
   "prediction_horizon_days": 30,
   "target": "Daily probability of a NASA FIRMS wildfire detection within the city risk area",
   "selected_model": "XGBoost",
