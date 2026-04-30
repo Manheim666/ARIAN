@@ -339,7 +339,7 @@
   },
   {
     "date":"2026-04-30",
-    "region":"Sumqayit",
+    "region":"Shabran",
     "risk_level":"Moderate",
     "probability":0.1823529452,
     "confidence":0.8041176438,
@@ -755,7 +755,7 @@
   },
   {
     "date":"2026-05-01",
-    "region":"Sumqayit",
+    "region":"Shabran",
     "risk_level":"High",
     "probability":0.4453125,
     "confidence":0.59375,
@@ -1171,7 +1171,7 @@
   },
   {
     "date":"2026-05-02",
-    "region":"Sumqayit",
+    "region":"Shabran",
     "risk_level":"Low",
     "probability":0.0260223057,
     "confidence":0.9291821554,
@@ -1587,7 +1587,7 @@
   },
   {
     "date":"2026-05-03",
-    "region":"Sumqayit",
+    "region":"Shabran",
     "risk_level":"Low",
     "probability":0.0034246575,
     "confidence":0.947260274,
@@ -2003,7 +2003,7 @@
   },
   {
     "date":"2026-05-04",
-    "region":"Sumqayit",
+    "region":"Shabran",
     "risk_level":"Low",
     "probability":0.0069284067,
     "confidence":0.9444572747,
@@ -2419,7 +2419,7 @@
   },
   {
     "date":"2026-05-05",
-    "region":"Sumqayit",
+    "region":"Shabran",
     "risk_level":"Low",
     "probability":0.0260223057,
     "confidence":0.9291821554,
@@ -2835,7 +2835,7 @@
   },
   {
     "date":"2026-05-06",
-    "region":"Sumqayit",
+    "region":"Shabran",
     "risk_level":"Low",
     "probability":0.0514705889,
     "confidence":0.9088235289,
@@ -3251,7 +3251,7 @@
   },
   {
     "date":"2026-05-07",
-    "region":"Sumqayit",
+    "region":"Shabran",
     "risk_level":"Low",
     "probability":0.0069284067,
     "confidence":0.9444572747,
@@ -3667,7 +3667,7 @@
   },
   {
     "date":"2026-05-08",
-    "region":"Sumqayit",
+    "region":"Shabran",
     "risk_level":"Low",
     "probability":0.0275229365,
     "confidence":0.9279816508,
@@ -4083,7 +4083,7 @@
   },
   {
     "date":"2026-05-09",
-    "region":"Sumqayit",
+    "region":"Shabran",
     "risk_level":"Low",
     "probability":0.0260223057,
     "confidence":0.9291821554,
@@ -4499,7 +4499,7 @@
   },
   {
     "date":"2026-05-10",
-    "region":"Sumqayit",
+    "region":"Shabran",
     "risk_level":"Low",
     "probability":0.0275229365,
     "confidence":0.9279816508,
@@ -4915,7 +4915,7 @@
   },
   {
     "date":"2026-05-11",
-    "region":"Sumqayit",
+    "region":"Shabran",
     "risk_level":"Low",
     "probability":0.0069284067,
     "confidence":0.9444572747,
@@ -5331,7 +5331,7 @@
   },
   {
     "date":"2026-05-12",
-    "region":"Sumqayit",
+    "region":"Shabran",
     "risk_level":"Low",
     "probability":0.0357142873,
     "confidence":0.9214285702,
@@ -5747,7 +5747,7 @@
   },
   {
     "date":"2026-05-13",
-    "region":"Sumqayit",
+    "region":"Shabran",
     "risk_level":"Low",
     "probability":0.0275229365,
     "confidence":0.9279816508,
@@ -6163,7 +6163,7 @@
   },
   {
     "date":"2026-05-14",
-    "region":"Sumqayit",
+    "region":"Shabran",
     "risk_level":"Low",
     "probability":0.0514705889,
     "confidence":0.9088235289,
@@ -6579,7 +6579,7 @@
   },
   {
     "date":"2026-05-15",
-    "region":"Sumqayit",
+    "region":"Shabran",
     "risk_level":"Low",
     "probability":0.0357142873,
     "confidence":0.9214285702,
@@ -6995,7 +6995,7 @@
   },
   {
     "date":"2026-05-16",
-    "region":"Sumqayit",
+    "region":"Shabran",
     "risk_level":"Low",
     "probability":0.0275229365,
     "confidence":0.9279816508,
@@ -7411,7 +7411,7 @@
   },
   {
     "date":"2026-05-17",
-    "region":"Sumqayit",
+    "region":"Shabran",
     "risk_level":"Low",
     "probability":0.0069284067,
     "confidence":0.9444572747,
@@ -7827,7 +7827,7 @@
   },
   {
     "date":"2026-05-18",
-    "region":"Sumqayit",
+    "region":"Shabran",
     "risk_level":"Low",
     "probability":0.0069284067,
     "confidence":0.9444572747,
@@ -8243,7 +8243,7 @@
   },
   {
     "date":"2026-05-19",
-    "region":"Sumqayit",
+    "region":"Shabran",
     "risk_level":"Low",
     "probability":0.0069284067,
     "confidence":0.9444572747,
@@ -8659,7 +8659,7 @@
   },
   {
     "date":"2026-05-20",
-    "region":"Sumqayit",
+    "region":"Shabran",
     "risk_level":"Low",
     "probability":0.0069284067,
     "confidence":0.9444572747,
@@ -9075,7 +9075,7 @@
   },
   {
     "date":"2026-05-21",
-    "region":"Sumqayit",
+    "region":"Shabran",
     "risk_level":"Low",
     "probability":0.0069284067,
     "confidence":0.9444572747,
@@ -9491,7 +9491,7 @@
   },
   {
     "date":"2026-05-22",
-    "region":"Sumqayit",
+    "region":"Shabran",
     "risk_level":"Low",
     "probability":0.0275229365,
     "confidence":0.9279816508,
@@ -9907,7 +9907,7 @@
   },
   {
     "date":"2026-05-23",
-    "region":"Sumqayit",
+    "region":"Shabran",
     "risk_level":"Low",
     "probability":0.0514705889,
     "confidence":0.9088235289,
@@ -10323,7 +10323,7 @@
   },
   {
     "date":"2026-05-24",
-    "region":"Sumqayit",
+    "region":"Shabran",
     "risk_level":"Low",
     "probability":0.0960648134,
     "confidence":0.8731481493,
@@ -10739,7 +10739,7 @@
   },
   {
     "date":"2026-05-25",
-    "region":"Sumqayit",
+    "region":"Shabran",
     "risk_level":"Low",
     "probability":0.0960648134,
     "confidence":0.8731481493,
@@ -11155,7 +11155,7 @@
   },
   {
     "date":"2026-05-26",
-    "region":"Sumqayit",
+    "region":"Shabran",
     "risk_level":"Low",
     "probability":0.0260223057,
     "confidence":0.9291821554,
@@ -11571,7 +11571,7 @@
   },
   {
     "date":"2026-05-27",
-    "region":"Sumqayit",
+    "region":"Shabran",
     "risk_level":"Low",
     "probability":0.0275229365,
     "confidence":0.9279816508,
@@ -11987,7 +11987,7 @@
   },
   {
     "date":"2026-05-28",
-    "region":"Sumqayit",
+    "region":"Shabran",
     "risk_level":"Low",
     "probability":0.0,
     "confidence":0.95,
@@ -12403,7 +12403,7 @@
   },
   {
     "date":"2026-05-29",
-    "region":"Sumqayit",
+    "region":"Shabran",
     "risk_level":"Low",
     "probability":0.0069284067,
     "confidence":0.9444572747,

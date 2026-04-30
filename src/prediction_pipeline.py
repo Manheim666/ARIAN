@@ -261,7 +261,7 @@ def threshold_from_validation(y_true: np.ndarray, probabilities: np.ndarray) -> 
     for threshold in np.arange(0.05, 0.81, 0.01):
         preds = (probabilities >= threshold).astype(int)
         precision, recall, f1, _ = precision_recall_fscore_support(y_true, preds, average="binary", zero_division=0)
-        if recall < 0.45:
+        if recall < 0.70:
             continue
         score = 0.45 * average_precision_score(y_true, probabilities) + 0.35 * f1 + 0.20 * recall + 0.10 * precision
         if score > best_score:

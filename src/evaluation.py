@@ -42,10 +42,10 @@ def fire_metrics(y_true, y_pred, y_prob=None):
 def find_optimal_threshold(y_true, y_prob,
                            recall_weight=0.3, f1_weight=0.4,
                            precision_weight=0.3,
-                           min_precision=0.30, min_recall=0.60,
+                           min_precision=0.30, min_recall=0.70,
                            grid=None):
     """Find threshold that maximises weighted recall+precision+f1 subject to
-    min precision (>=0.30) and min recall (>=0.60) hard gates.
+    min precision (>=0.30) and min recall (>=0.70) hard gates.
     """
     if grid is None:
         grid = np.arange(0.05, 0.95, 0.01)
