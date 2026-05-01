@@ -64,6 +64,7 @@ CITIES = {
     "Jalilabad":   (39.2089, 48.2986),
     "Barda":       (40.3744, 47.1266),
     "Zaqatala":    (41.6296, 46.6433),
+    "Shabran":     (41.2156, 48.8544),
 }
 
 CITY_LIST = sorted(CITIES.keys())
