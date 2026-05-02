@@ -40,7 +40,7 @@ try:
 except Exception:  # pragma: no cover - optional dependency
     CatBoostClassifier = None
 
-from src.config import ENG_DAILY, FORECAST_30D, MODELS_F, OUTPUTS, RANDOM_SEED
+from src.config import CITIES, ENG_DAILY, FORECAST_30D, MODELS_F, OUTPUTS, RANDOM_SEED
 from src.features import add_calendar_features, add_wildfire_weather_features, compute_fwi_proxy
 
 warnings.filterwarnings("ignore", category=PerformanceWarning)
@@ -323,6 +323,10 @@ def write_outputs(best: ModelResult, leaderboard: List[Dict[str, float]], featur
     probabilities = best.calibrator.predict(best.estimator.predict_proba(X_future)[:, 1])
 
     out = forecast_raw.copy().sort_values(["Date", "City"]).reset_index(drop=True)
+    # Override Lat/Lon with canonical CITIES coordinates (history data may have stale values)
+    city_coords = {c: (lat, lon) for c, (lat, lon) in CITIES.items()}
+    out["Latitude"] = out["City"].map(lambda c: city_coords.get(c, (np.nan, np.nan))[0])
+    out["Longitude"] = out["City"].map(lambda c: city_coords.get(c, (np.nan, np.nan))[1])
     out["probability"] = probabilities
     out["confidence"] = out["probability"].map(_confidence)
     out["risk_level"] = out["probability"].map(_risk_level)

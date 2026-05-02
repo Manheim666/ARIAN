@@ -357,8 +357,8 @@
     "Solar_Radiation_Wm2_mean": 275.3076201378381,
     "Soil_Temp_C_mean": 24.305580243835664,
     "Soil_Moisture_mean": 0.2575493983655761,
-    "Latitude": 40.5897,
-    "Longitude": 49.6686,
+    "Latitude": 41.2156,
+    "Longitude": 48.8544,
     "climate_summary": "Mild temperatures, strong wind.",
     "warning": "Wind is elevated, so small ignitions could spread faster.",
     "risk_color": "#3FA773"
