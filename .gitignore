@@ -18,6 +18,10 @@ Thumbs.db
 # Requests HTTP cache (large, regenerated on run)
 data/raw/.cache.sqlite
 
+# Notebook artifacts
+notebooks/cache/
+notebooks/logs/
+
 # Temp files
 *.tmp
 *.bak

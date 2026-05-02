@@ -253,6 +253,7 @@ from src.visualization import plot_confusion_matrix, plot_pr_curves, plot_featur
 | **`evaluation.py`** | Metrics, threshold tuning, leaderboard construction | `fire_metrics()`, `find_optimal_threshold()`, `build_fire_leaderboard()`, `weather_metrics()` |
 | **`visualization.py`** | Reusable plotting helpers | `plot_confusion_matrix()`, `plot_pr_curves()`, `plot_feature_importance()`, `plot_leaderboard()` |
 | **`utils.py`** | Data loading, model saving, misc helpers | `load_parquet_safe()`, `save_model()`, `load_model()` |
+| **`prediction_pipeline.py`** | End-to-end 30-day risk scoring pipeline | `build_features()`, `load_training_frame()`, `load_forecast_frame()`, `candidate_models()`, `train_and_select()`, `write_outputs()`, `main()` |
 
 ---
 
@@ -266,8 +267,7 @@ WildFire-Prediction/
 │   ├── 03_Weather_TimeSeries.ipynb         Prophet + XGBoost + multi-model forecasting
 │   ├── 04_Wildfire_Detection.ipynb         8 models + SMOTE + Optuna + SHAP + calibration
 │   ├── 05_Risk_Prediction_Dashboard.ipynb  30-day risk + Folium + Plotly maps
-│   ├── 06_Climate_Report.ipynb             Climate trends + jury report
-│   └── _archive/                           Previous notebook versions (kept for reference)
+│   └── 06_Climate_Report.ipynb             Climate trends + jury report
 │
 ├── src/                                    Shared Python module (imported by all notebooks)
 │   ├── __init__.py
@@ -276,7 +276,8 @@ WildFire-Prediction/
 │   ├── modeling.py                         Model factories (weather + fire classifiers)
 │   ├── evaluation.py                       Metrics, threshold tuning, leaderboards
 │   ├── visualization.py                    Plotting helpers (CM, PR curves, SHAP)
-│   └── utils.py                            Data loading, model saving
+│   ├── utils.py                            Data loading, model saving
+│   └── prediction_pipeline.py              End-to-end 30-day risk scoring pipeline
 │
 ├── data/
 │   ├── raw/
@@ -316,6 +317,18 @@ WildFire-Prediction/
 │   ├── figures/                             Publication-quality figures (NB4, NB6)
 │   ├── maps/                                Interactive HTML maps (NB5)
 │   └── metrics/                             CSV leaderboards and summaries (NB4, NB6)
+│
+├── dashboard/                               Standalone web dashboard (HTML/JS/CSS)
+│   ├── index.html
+│   ├── app.js
+│   ├── styles.css
+│   └── data/                              forecast_30_days.json/csv, metrics.json
+│
+├── docs/                                    GitHub Pages mirror of the dashboard
+│   ├── index.html
+│   ├── app.js
+│   ├── styles.css
+│   └── data/
 │
 ├── requirements.txt                         pip install -r requirements.txt
 ├── .gitignore
