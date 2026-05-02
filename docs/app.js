@@ -30,29 +30,39 @@ async function loadData() {
 }
 
 function initializeControls() {
-  const dates = [...new Set(forecast.map((d) => d.date))];
+  const dates = [...new Set(forecast.map((d) => d.date))].sort();
   const regions = [...new Set(forecast.map((d) => d.region))].sort();
 
-  document.getElementById("datePicker").min = dates[0];
-  document.getElementById("datePicker").max = dates[dates.length - 1];
-  document.getElementById("datePicker").value = selectedDate;
-  document.getElementById("tableDateFilter").min = dates[0];
-  document.getElementById("tableDateFilter").max = dates[dates.length - 1];
+  const datePicker = document.getElementById("datePicker");
+  datePicker.innerHTML = dates.map((d) => `<option value="${d}">${new Date(d + "T00:00").toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" })}</option>`).join("");
+  datePicker.value = selectedDate;
+
+  const tableDateFilter = document.getElementById("tableDateFilter");
+  tableDateFilter.innerHTML = '<option value="">All dates</option>' + dates.map((d) => `<option value="${d}">${new Date(d + "T00:00").toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" })}</option>`).join("");
 
   const regionSelect = document.getElementById("regionSelect");
+  const panelRegionSelect = document.getElementById("panelRegionSelect");
   regionSelect.innerHTML = regions.map((r) => `<option value="${r}">${r}</option>`).join("");
+  panelRegionSelect.innerHTML = regionSelect.innerHTML;
   regionSelect.value = selectedRegion;
+  panelRegionSelect.value = selectedRegion;
 
-  document.getElementById("datePicker").addEventListener("change", (event) => {
+  datePicker.addEventListener("change", (event) => {
     selectedDate = event.target.value;
     renderAll();
   });
   regionSelect.addEventListener("change", (event) => {
     selectedRegion = event.target.value;
+    panelRegionSelect.value = selectedRegion;
+    renderAll();
+  });
+  panelRegionSelect.addEventListener("change", (event) => {
+    selectedRegion = event.target.value;
+    regionSelect.value = selectedRegion;
     renderAll();
   });
   document.getElementById("riskFilter").addEventListener("change", renderTable);
-  document.getElementById("tableDateFilter").addEventListener("change", renderTable);
+  tableDateFilter.addEventListener("change", renderTable);
 
   document.getElementById("modelStatus").textContent =
     `${metrics.selected_model} model · ${metrics.prediction_horizon_days}-day forecast`;
@@ -90,7 +100,7 @@ function renderHeroStats() {
     ["Regions", new Set(forecast.map((d) => d.region)).size],
     ["High-risk areas", highCount],
     ["Average risk", fmtPct(avgProb)],
-    ["Watch region", maxRow.region],
+    ["Watch region", "Azerbaijan"],
   ].map(([label, value]) => `<div class="stat-card"><span>${label}</span><strong>${value}</strong></div>`).join("");
 }
 
@@ -129,6 +139,7 @@ function renderMap() {
     const selectRegion = () => {
       selectedRegion = row.region;
       document.getElementById("regionSelect").value = row.region;
+      document.getElementById("panelRegionSelect").value = row.region;
       renderAll();
     };
     marker.on("click", selectRegion);
@@ -147,7 +158,8 @@ function renderPanel() {
   document.getElementById("panelTemp").textContent = `${fmtOne(row.temperature)} C`;
   document.getElementById("panelWind").textContent = `${fmtOne(row.wind)} km/h`;
   document.getElementById("panelHumidity").textContent = `${fmtOne(row.humidity)}%`;
-  document.getElementById("panelConfidence").textContent = fmtPct(row.confidence);
+  document.getElementById("panelRain").textContent = `${Number(row.rain).toFixed(2)} mm`;
+  document.getElementById("panelRegionSelect").value = row.region;
   document.getElementById("panelSummary").textContent = row.climate_summary;
   document.getElementById("panelWarning").textContent = row.warning;
 

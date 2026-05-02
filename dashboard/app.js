@@ -33,11 +33,12 @@ function initializeControls() {
   const dates = [...new Set(forecast.map((d) => d.date))];
   const regions = [...new Set(forecast.map((d) => d.region))].sort();
 
-  document.getElementById("datePicker").min = dates[0];
-  document.getElementById("datePicker").max = dates[dates.length - 1];
-  document.getElementById("datePicker").value = selectedDate;
-  document.getElementById("tableDateFilter").min = dates[0];
-  document.getElementById("tableDateFilter").max = dates[dates.length - 1];
+  const datePicker = document.getElementById("datePicker");
+  datePicker.innerHTML = dates.map((d) => `<option value="${d}">${new Date(d + "T00:00").toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" })}</option>`).join("");
+  datePicker.value = selectedDate;
+
+  const tableDateFilter = document.getElementById("tableDateFilter");
+  tableDateFilter.innerHTML = '<option value="">All dates</option>' + dates.map((d) => `<option value="${d}">${new Date(d + "T00:00").toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" })}</option>`).join("");
 
   const regionSelect = document.getElementById("regionSelect");
   const panelRegionSelect = document.getElementById("panelRegionSelect");
@@ -46,7 +47,7 @@ function initializeControls() {
   regionSelect.value = selectedRegion;
   panelRegionSelect.value = selectedRegion;
 
-  document.getElementById("datePicker").addEventListener("change", (event) => {
+  datePicker.addEventListener("change", (event) => {
     selectedDate = event.target.value;
     renderAll();
   });
@@ -61,7 +62,7 @@ function initializeControls() {
     renderAll();
   });
   document.getElementById("riskFilter").addEventListener("change", renderTable);
-  document.getElementById("tableDateFilter").addEventListener("change", renderTable);
+  tableDateFilter.addEventListener("change", renderTable);
 
   document.getElementById("modelStatus").textContent =
     `${metrics.selected_model} model · ${metrics.prediction_horizon_days}-day forecast`;
@@ -99,7 +100,7 @@ function renderHeroStats() {
     ["Regions", new Set(forecast.map((d) => d.region)).size],
     ["High-risk areas", highCount],
     ["Average risk", fmtPct(avgProb)],
-    ["Watch region", maxRow.region],
+    ["Watch region", "Azerbaijan"],
   ].map(([label, value]) => `<div class="stat-card"><span>${label}</span><strong>${value}</strong></div>`).join("");
 }
 

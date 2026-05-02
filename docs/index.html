@@ -51,7 +51,7 @@
               <p class="section-kicker">Interactive Map</p>
               <h2>Azerbaijan risk zones</h2>
             </div>
-            <input type="date" id="datePicker" />
+            <select id="datePicker"></select>
           </div>
           <div id="map"></div>
         </div>
@@ -59,6 +59,7 @@
         <aside class="side-panel" id="regionPanel">
           <p class="section-kicker">Selected Region</p>
           <h2 id="selectedRegion">Baku</h2>
+          <select id="panelRegionSelect" class="panel-select" aria-label="Select city"></select>
           <div class="risk-band" id="riskBand">
             <span id="riskLevel">Low</span>
             <strong id="riskScore">0%</strong>
@@ -67,7 +68,7 @@
             <div><span>Temperature</span><strong id="panelTemp">--</strong></div>
             <div><span>Wind</span><strong id="panelWind">--</strong></div>
             <div><span>Humidity</span><strong id="panelHumidity">--</strong></div>
-            <div><span>Confidence</span><strong id="panelConfidence">--</strong></div>
+            <div><span>Rain</span><strong id="panelRain">--</strong></div>
           </div>
           <p class="summary" id="panelSummary"></p>
           <p class="warning" id="panelWarning"></p>
@@ -121,7 +122,7 @@
               <option value="High">High</option>
               <option value="Extreme">Extreme</option>
             </select>
-            <input type="date" id="tableDateFilter" />
+            <select id="tableDateFilter"><option value="">All dates</option></select>
           </div>
         </div>
         <div class="table-wrap">
