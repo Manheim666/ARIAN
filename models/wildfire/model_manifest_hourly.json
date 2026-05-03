@@ -1,0 +1,34 @@
+{
+  "model_name": "CatBoost_H",
+  "optimal_threshold": 0.5,
+  "n_features": 68,
+  "val_date": "2024-01-01",
+  "test_date": "2025-01-01",
+  "imbalance_ratio": 11.0,
+  "train_shape": [
+    1675840,
+    68
+  ],
+  "val_shape": [
+    140544,
+    68
+  ],
+  "test_shape": [
+    187328,
+    68
+  ],
+  "metrics": {
+    "recall": 0.6828500292911541,
+    "precision": 0.25136125936708176,
+    "f1": 0.36745872246522443,
+    "accuracy": 0.8286214554151008,
+    "fn": 4331.0,
+    "fp": 27773.0,
+    "tp": 9325.0,
+    "tn": 145899.0,
+    "pr_auc": 0.3670160581835904,
+    "roc_auc": 0.859483830723683
+  },
+  "overfit_gap": 0.02411076927674971,
+  "total_models_compared": 4
+}

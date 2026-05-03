@@ -41,5 +41,5 @@ matplotlib>=3.8
 seaborn>=0.13
 
 # Optional (GEE enrichment in NB01)
-# earthengine-api>=0.1
-# osmnx>=1.9
+earthengine-api>=0.1
+osmnx>=1.9

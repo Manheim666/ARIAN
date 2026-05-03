@@ -40,7 +40,7 @@ try:
 except Exception:  # pragma: no cover - optional dependency
     CatBoostClassifier = None
 
-from src.config import CITIES, ENG_DAILY, FORECAST_30D, MODELS_F, OUTPUTS, RANDOM_SEED
+from src.config import CITIES, ENG_DAILY, ENG_HOURLY, FORECAST_30D, FORECAST_168H, MODELS_F, OUTPUTS, RANDOM_SEED
 from src.features import add_calendar_features, add_wildfire_weather_features, compute_fwi_proxy
 
 warnings.filterwarnings("ignore", category=PerformanceWarning)
@@ -398,6 +398,53 @@ def write_outputs(best: ModelResult, leaderboard: List[Dict[str, float]], featur
         "data_sources": ["NASA FIRMS MODIS/VIIRS", "Open-Meteo ERA5/ERA5-Land", "Open-Elevation/static geography"],
     }
     (OUTPUTS / "metrics.json").write_text(json.dumps(metrics, indent=2), encoding="utf-8")
+
+    if FORECAST_168H.exists():
+        hourly = pd.read_parquet(FORECAST_168H)
+        hourly_out = pd.DataFrame({
+            "timestamp": pd.to_datetime(hourly["Timestamp"]).dt.strftime("%Y-%m-%dT%H:%M"),
+            "region": hourly["City"],
+            "temperature": hourly["Temperature_C"].round(1),
+            "humidity": hourly["Humidity_percent"].round(1),
+            "wind": hourly["Wind_Speed_kmh"].round(1),
+            "solar": hourly["Solar_Radiation_Wm2"].round(1),
+        })
+        (OUTPUTS / "hourly_forecast_168h.json").write_text(
+            hourly_out.to_json(orient="records", indent=2), encoding="utf-8")
+
+        # ── Hourly fire risk scoring ─────────────────────────────────────
+        hourly_model_path = MODELS_F / "best_fire_model_hourly.joblib"
+        hourly_manifest_path = MODELS_F / "model_manifest_hourly.json"
+        hourly_feat_path = MODELS_F / "feature_columns_hourly.json"
+        if hourly_model_path.exists() and hourly_feat_path.exists():
+            import json as _json
+            h_model = joblib.load(hourly_model_path)
+            with open(hourly_feat_path) as _f:
+                h_feature_cols = _json.load(_f)
+            with open(hourly_manifest_path) as _f:
+                h_manifest = _json.load(_f)
+            h_threshold = h_manifest.get("optimal_threshold", 0.5)
+
+            # Build feature matrix from hourly forecast
+            hf = hourly.copy()
+            hf["Timestamp"] = pd.to_datetime(hf["Timestamp"])
+            # Align column names for model
+            for col in h_feature_cols:
+                if col not in hf.columns:
+                    hf[col] = 0
+            X_h = hf[h_feature_cols].fillna(0)
+            h_proba = h_model.predict_proba(X_h)[:, 1]
+
+            hourly_out["probability"] = h_proba.round(4)
+            hourly_out["risk_level"] = hourly_out["probability"].map(_risk_level)
+            hourly_out["risk_score"] = (h_proba * 100).round(1)
+            hourly_out["predicted_fire"] = (h_proba >= h_threshold).astype(int)
+            hourly_out["confidence"] = hourly_out["probability"].map(_confidence)
+            hourly_out["risk_color"] = hourly_out["risk_level"].map(RISK_COLORS)
+
+        # Re-write with fire risk columns included
+        (OUTPUTS / "hourly_forecast_168h.json").write_text(
+            hourly_out.to_json(orient="records", indent=2), encoding="utf-8")
 
     MODELS_F.mkdir(parents=True, exist_ok=True)
     joblib.dump(
