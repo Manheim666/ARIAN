@@ -3,10 +3,6 @@ ARIAN Wildfire Prediction — Modeling Utilities
 ================================================
 Model factories, training helpers, hyperparameter search utilities.
 """
-from __future__ import annotations
-
-from typing import Any, Dict, Tuple
-
 import numpy as np
 import pandas as pd
 import warnings
@@ -27,7 +23,7 @@ SEED = 42
 # Weather Model Factory
 # ═══════════════════════════════════════════════════════════════════════════
 
-def get_weather_models() -> Dict[str, Any]:
+def get_weather_models():
     """Return dict of {name: model} for weather forecasting comparison."""
     models = {
         "Ridge": Ridge(alpha=1.0),
@@ -76,7 +72,7 @@ def get_weather_models() -> Dict[str, Any]:
 # Fire Detection Model Factory
 # ═══════════════════════════════════════════════════════════════════════════
 
-def get_fire_models(imbalance_ratio: float = 10.0) -> Dict[str, Tuple[Any, str]]:
+def get_fire_models(imbalance_ratio=10.0):
     """Return dict of {name: (model, imbalance_strategy)} for fire detection."""
     models = {}
 
@@ -169,7 +165,7 @@ def get_fire_models(imbalance_ratio: float = 10.0) -> Dict[str, Tuple[Any, str]]
     return models
 
 
-def calibrate_model(model: Any, X_val: np.ndarray, y_val: np.ndarray, method: str = "isotonic") -> CalibratedClassifierCV:
+def calibrate_model(model, X_val, y_val, method="isotonic"):
     """Return a CalibratedClassifierCV wrapper."""
     cal = CalibratedClassifierCV(model, method=method, cv="prefit")
     cal.fit(X_val, y_val)

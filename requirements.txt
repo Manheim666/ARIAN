@@ -36,9 +36,6 @@ plotly>=5.18
 # NB06: Climate Report
 # (no additional deps)
 
-# Pipeline orchestration (run_pipeline.sh)
-papermill>=2.5
-
 # Visualization (all notebooks)
 matplotlib>=3.8
 seaborn>=0.13

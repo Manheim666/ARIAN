@@ -3,21 +3,15 @@ ARIAN Wildfire Prediction — Visualization Utilities
 =====================================================
 Reusable plotting functions for EDA, evaluation, and maps.
 """
-from __future__ import annotations
-
-from typing import Any, Dict, List, Optional
-
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-import matplotlib.axes as mpl_axes
-import matplotlib.figure as mpl_figure
 import seaborn as sns
 
 sns.set_theme(style="whitegrid")
 
 
-def plot_confusion_matrix(y_true: np.ndarray, y_pred: np.ndarray, title: str = "", ax: Optional[mpl_axes.Axes] = None, labels: Optional[List[str]] = None) -> mpl_axes.Axes:
+def plot_confusion_matrix(y_true, y_pred, title="", ax=None, labels=None):
     """Plot a confusion matrix heatmap."""
     from sklearn.metrics import confusion_matrix, recall_score, f1_score
     if labels is None:
@@ -35,7 +29,7 @@ def plot_confusion_matrix(y_true: np.ndarray, y_pred: np.ndarray, title: str = "
     return ax
 
 
-def plot_pr_curves(curves_dict: Dict[str, np.ndarray], y_true: np.ndarray, title: str = "PR Curves", ax: Optional[mpl_axes.Axes] = None) -> mpl_axes.Axes:
+def plot_pr_curves(curves_dict, y_true, title="PR Curves", ax=None):
     """Plot multiple PR curves.
     curves_dict: {label: y_prob}
     """
@@ -56,8 +50,8 @@ def plot_pr_curves(curves_dict: Dict[str, np.ndarray], y_true: np.ndarray, title
     return ax
 
 
-def plot_feature_importance(feature_names: List[str], importances: np.ndarray, top_n: int = 25,
-                            title: str = "Feature Importance", ax: Optional[mpl_axes.Axes] = None) -> mpl_axes.Axes:
+def plot_feature_importance(feature_names, importances, top_n=25,
+                            title="Feature Importance", ax=None):
     """Horizontal bar chart of top-N feature importances."""
     fi = pd.DataFrame({"Feature": feature_names, "Importance": importances})
     fi = fi.sort_values("Importance", ascending=False).head(top_n)
@@ -68,7 +62,7 @@ def plot_feature_importance(feature_names: List[str], importances: np.ndarray, t
     return ax
 
 
-def plot_leaderboard(lb_df: pd.DataFrame, metric_cols: Optional[List[str]] = None, title: str = "Model Leaderboard") -> Optional[mpl_figure.Figure]:
+def plot_leaderboard(lb_df, metric_cols=None, title="Model Leaderboard"):
     """Bar chart comparing models on key metrics."""
     if metric_cols is None:
         metric_cols = ["recall", "f1", "precision", "pr_auc"]

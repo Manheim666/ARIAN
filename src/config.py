@@ -41,7 +41,7 @@ SRC        = ROOT / "src"
 ALL_DIRS = [RAW, LEGACY, FIRMS_DIR, PROCESSED, REFERENCE, OUTPUTS,
             MODELS, MODELS_W, MODELS_F, REPORTS, FIGURES, MAPS, METRICS]
 
-def ensure_dirs() -> None:
+def ensure_dirs():
     for p in ALL_DIRS:
         p.mkdir(parents=True, exist_ok=True)
 
