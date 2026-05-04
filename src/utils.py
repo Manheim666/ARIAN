@@ -3,6 +3,10 @@ ARIAN Wildfire Prediction — General Utilities
 ===============================================
 Helpers for data loading, saving, and misc operations.
 """
+from __future__ import annotations
+
+from typing import Any, List, Optional, Union
+
 import json, warnings
 import numpy as np
 import pandas as pd
@@ -11,7 +15,7 @@ from pathlib import Path
 warnings.filterwarnings("ignore")
 
 
-def load_parquet_safe(path, fallback_path=None, date_cols=None):
+def load_parquet_safe(path: Union[str, Path], fallback_path: Optional[Union[str, Path]] = None, date_cols: Optional[List[str]] = None) -> pd.DataFrame:
     """Load parquet with fallback and date parsing."""
     p = Path(path)
     if p.exists():
@@ -29,7 +33,7 @@ def load_parquet_safe(path, fallback_path=None, date_cols=None):
     return df
 
 
-def save_model_artifact(obj, path, format="joblib"):
+def save_model_artifact(obj: Any, path: Union[str, Path], format: str = "joblib") -> None:
     """Save model in joblib or json format."""
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -46,7 +50,7 @@ def save_model_artifact(obj, path, format="joblib"):
     print(f"  Saved: {path}")
 
 
-def load_model_artifact(path, format="joblib"):
+def load_model_artifact(path: Union[str, Path], format: str = "joblib") -> Any:
     """Load model from disk."""
     path = Path(path)
     if format == "json":
@@ -63,7 +67,7 @@ def load_model_artifact(path, format="joblib"):
             return pickle.load(f)
 
 
-def get_numeric_features(df, drop_cols=None):
+def get_numeric_features(df: pd.DataFrame, drop_cols: Optional[List[str]] = None) -> List[str]:
     """Get list of numeric feature columns, excluding drop_cols."""
     if drop_cols is None:
         drop_cols = []
@@ -72,7 +76,7 @@ def get_numeric_features(df, drop_cols=None):
             and df[c].dtype in ["float64", "float32", "int64", "int32"]]
 
 
-def reduce_mem_usage(df):
+def reduce_mem_usage(df: pd.DataFrame) -> pd.DataFrame:
     """Downcast numeric columns to reduce memory."""
     for col in df.select_dtypes(include=["float64"]).columns:
         df[col] = pd.to_numeric(df[col], downcast="float")

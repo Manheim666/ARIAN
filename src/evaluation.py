@@ -3,6 +3,10 @@ ARIAN Wildfire Prediction — Evaluation Utilities
 ==================================================
 Metrics, threshold tuning, leaderboard helpers.
 """
+from __future__ import annotations
+
+from typing import Dict, Optional
+
 import numpy as np
 import pandas as pd
 from sklearn.metrics import (
@@ -17,7 +21,7 @@ from sklearn.metrics import (
 # Classification (Fire Detection)
 # ═══════════════════════════════════════════════════════════════════════════
 
-def fire_metrics(y_true, y_pred, y_prob=None):
+def fire_metrics(y_true: np.ndarray, y_pred: np.ndarray, y_prob: Optional[np.ndarray] = None) -> Dict[str, float]:
     """Compute comprehensive fire detection metrics."""
     m = {
         "recall":    recall_score(y_true, y_pred, zero_division=0),
@@ -39,11 +43,11 @@ def fire_metrics(y_true, y_pred, y_prob=None):
     return m
 
 
-def find_optimal_threshold(y_true, y_prob,
-                           recall_weight=0.3, f1_weight=0.4,
-                           precision_weight=0.3,
-                           min_precision=0.30, min_recall=0.70,
-                           grid=None):
+def find_optimal_threshold(y_true: np.ndarray, y_prob: np.ndarray,
+                           recall_weight: float = 0.3, f1_weight: float = 0.4,
+                           precision_weight: float = 0.3,
+                           min_precision: float = 0.30, min_recall: float = 0.70,
+                           grid: Optional[np.ndarray] = None) -> float:
     """Find threshold that maximises weighted recall+precision+f1 subject to
     min precision (>=0.30) and min recall (>=0.70) hard gates.
     """
@@ -69,7 +73,7 @@ def find_optimal_threshold(y_true, y_prob,
     return best_thresh
 
 
-def build_fire_leaderboard(results_dict):
+def build_fire_leaderboard(results_dict: Dict[str, dict]) -> pd.DataFrame:
     """Build a leaderboard DataFrame from results dictionary.
 
     results_dict: {model_name: {"y_pred": ..., "y_prob": ..., "threshold": ...,
@@ -104,7 +108,7 @@ def build_fire_leaderboard(results_dict):
 # Regression (Weather)
 # ═══════════════════════════════════════════════════════════════════════════
 
-def weather_metrics(y_true, y_pred, var_name=""):
+def weather_metrics(y_true: np.ndarray, y_pred: np.ndarray, var_name: str = "") -> Dict[str, float]:
     """Compute regression metrics."""
     y_t = np.array(y_true).ravel()
     y_p = np.array(y_pred).ravel()

@@ -17,7 +17,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_597b57f92c83a117514a8ce8df12b587 {
+                #map_2c3d042dcf873efac4113dae963e5807 {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -56,14 +56,14 @@
     <div style="position:fixed;top:10px;left:60px;z-index:1000;background:white;padding:10px 20px;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,.3);font-family:Arial"><h3 style="margin:0">Azerbaijan Wildfire Risk — 2026-05-23</h3></div>
     <div style="position:fixed;bottom:30px;left:30px;z-index:1000;background:white;padding:10px 15px;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,.3);font-size:12px"><b>Risk</b><br><span style="color:green">●</span> Low<br><span style="color:orange">●</span> Medium<br><span style="color:red">●</span> High<br><span style="color:darkred">●</span> Extreme</div>
     
-            <div class="folium-map" id="map_597b57f92c83a117514a8ce8df12b587" ></div>
+            <div class="folium-map" id="map_2c3d042dcf873efac4113dae963e5807" ></div>
         
 </body>
 <script>
     
     
-            var map_597b57f92c83a117514a8ce8df12b587 = L.map(
-                "map_597b57f92c83a117514a8ce8df12b587",
+            var map_2c3d042dcf873efac4113dae963e5807 = L.map(
+                "map_2c3d042dcf873efac4113dae963e5807",
                 {
                     center: [40.4, 47.8],
                     crs: L.CRS.EPSG3857,
@@ -80,7 +80,7 @@
 
         
     
-            var tile_layer_36c2a4b6cf1f3a610e02ca879c8e2819 = L.tileLayer(
+            var tile_layer_32053e915cb203cde3969c36df308d38 = L.tileLayer(
                 "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
                 {
   "minZoom": 0,
@@ -97,35 +97,35 @@
             );
         
     
-            tile_layer_36c2a4b6cf1f3a610e02ca879c8e2819.addTo(map_597b57f92c83a117514a8ce8df12b587);
+            tile_layer_32053e915cb203cde3969c36df308d38.addTo(map_2c3d042dcf873efac4113dae963e5807);
         
     
-            var circle_marker_e58a42884c396a791ff6336c266b990f = L.circleMarker(
+            var circle_marker_b36f07dafb22e1ce19e754459a5f48ad = L.circleMarker(
                 [40.4093, 49.8671],
                 {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
-            ).addTo(map_597b57f92c83a117514a8ce8df12b587);
+            ).addTo(map_2c3d042dcf873efac4113dae963e5807);
         
     
-        var popup_c71a6d462fdd36443011e0a3c4deac97 = L.popup({
+        var popup_afeeabe0a0fb2bb7ea4d4690f4e2045a = L.popup({
   "maxWidth": 250,
 });
 
         
             
-                var html_13aca3c2de697bc371e74d50d6ed0eaf = $(`<div id="html_13aca3c2de697bc371e74d50d6ed0eaf" style="width: 100.0%; height: 100.0%;"><b>Baku</b><br>Date: 2026-05-23<br>Fire Risk: 2.1% (<b style='color:green'>Low</b>)<br>Temp: 20.4°C<br>Hum: 74.9%<br>Wind: 14.9 km/h<br>Rain: 0.4 mm<br></div>`)[0];
-                popup_c71a6d462fdd36443011e0a3c4deac97.setContent(html_13aca3c2de697bc371e74d50d6ed0eaf);
+                var html_ad97500655a39eadc6f90bf427ec1686 = $(`<div id="html_ad97500655a39eadc6f90bf427ec1686" style="width: 100.0%; height: 100.0%;"><b>Baku</b><br>Date: 2026-05-23<br>Fire Risk: 0.2% (<b style='color:green'>Low</b>)<br>Temp: 20.4°C<br>Hum: 74.9%<br>Wind: 13.9 km/h<br>Rain: 0.5 mm<br></div>`)[0];
+                popup_afeeabe0a0fb2bb7ea4d4690f4e2045a.setContent(html_ad97500655a39eadc6f90bf427ec1686);
             
         
 
-        circle_marker_e58a42884c396a791ff6336c266b990f.bindPopup(popup_c71a6d462fdd36443011e0a3c4deac97)
+        circle_marker_b36f07dafb22e1ce19e754459a5f48ad.bindPopup(popup_afeeabe0a0fb2bb7ea4d4690f4e2045a)
         ;
 
         
     
     
-            circle_marker_e58a42884c396a791ff6336c266b990f.bindTooltip(
+            circle_marker_b36f07dafb22e1ce19e754459a5f48ad.bindTooltip(
                 `<div>
-                     Baku: 2%
+                     Baku: 0%
                  </div>`,
                 {
   "sticky": true,
@@ -133,32 +133,32 @@
             );
         
     
-            var circle_marker_264bb81aabdac497a8018c3d4a2dba3b = L.circleMarker(
+            var circle_marker_b7aa780eccb04e0e1da40c2925f8ce0a = L.circleMarker(
                 [40.3744, 47.1266],
                 {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
-            ).addTo(map_597b57f92c83a117514a8ce8df12b587);
+            ).addTo(map_2c3d042dcf873efac4113dae963e5807);
         
     
-        var popup_081d309ee6d18e348311996a855f0a98 = L.popup({
+        var popup_e30ec2e8632ece8257388928205d7406 = L.popup({
   "maxWidth": 250,
 });
 
         
             
-                var html_017e0eddbb6a398ebd6e4013b773e60b = $(`<div id="html_017e0eddbb6a398ebd6e4013b773e60b" style="width: 100.0%; height: 100.0%;"><b>Barda</b><br>Date: 2026-05-23<br>Fire Risk: 1.5% (<b style='color:green'>Low</b>)<br>Temp: 22.9°C<br>Hum: 60.5%<br>Wind: 8.9 km/h<br>Rain: 1.2 mm<br></div>`)[0];
-                popup_081d309ee6d18e348311996a855f0a98.setContent(html_017e0eddbb6a398ebd6e4013b773e60b);
+                var html_f625835d49591338a7c060601f10cbea = $(`<div id="html_f625835d49591338a7c060601f10cbea" style="width: 100.0%; height: 100.0%;"><b>Barda</b><br>Date: 2026-05-23<br>Fire Risk: 0.1% (<b style='color:green'>Low</b>)<br>Temp: 22.9°C<br>Hum: 60.5%<br>Wind: 8.9 km/h<br>Rain: 1.2 mm<br></div>`)[0];
+                popup_e30ec2e8632ece8257388928205d7406.setContent(html_f625835d49591338a7c060601f10cbea);
             
         
 
-        circle_marker_264bb81aabdac497a8018c3d4a2dba3b.bindPopup(popup_081d309ee6d18e348311996a855f0a98)
+        circle_marker_b7aa780eccb04e0e1da40c2925f8ce0a.bindPopup(popup_e30ec2e8632ece8257388928205d7406)
         ;
 
         
     
     
-            circle_marker_264bb81aabdac497a8018c3d4a2dba3b.bindTooltip(
+            circle_marker_b7aa780eccb04e0e1da40c2925f8ce0a.bindTooltip(
                 `<div>
-                     Barda: 1%
+                     Barda: 0%
                  </div>`,
                 {
   "sticky": true,
@@ -166,30 +166,30 @@
             );
         
     
-            var circle_marker_099266748325bc01afddf20b3536b3ab = L.circleMarker(
+            var circle_marker_bac93118ed22545ace4adf17be48ee1a = L.circleMarker(
                 [40.9982, 47.8468],
                 {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
-            ).addTo(map_597b57f92c83a117514a8ce8df12b587);
+            ).addTo(map_2c3d042dcf873efac4113dae963e5807);
         
     
-        var popup_5409df927781eea164901fbde5d9468d = L.popup({
+        var popup_cbf296e445f2aff2168254bb815111c6 = L.popup({
   "maxWidth": 250,
 });
 
         
             
-                var html_f3501f22893a44e32e7dff78bc9c6aff = $(`<div id="html_f3501f22893a44e32e7dff78bc9c6aff" style="width: 100.0%; height: 100.0%;"><b>Gabala</b><br>Date: 2026-05-23<br>Fire Risk: 0.4% (<b style='color:green'>Low</b>)<br>Temp: 16.5°C<br>Hum: 68.6%<br>Wind: 4.4 km/h<br>Rain: 1.6 mm<br></div>`)[0];
-                popup_5409df927781eea164901fbde5d9468d.setContent(html_f3501f22893a44e32e7dff78bc9c6aff);
+                var html_9b5d687650313048472ebcfa6d71bc0d = $(`<div id="html_9b5d687650313048472ebcfa6d71bc0d" style="width: 100.0%; height: 100.0%;"><b>Gabala</b><br>Date: 2026-05-23<br>Fire Risk: 0.1% (<b style='color:green'>Low</b>)<br>Temp: 16.5°C<br>Hum: 68.6%<br>Wind: 4.6 km/h<br>Rain: 1.5 mm<br></div>`)[0];
+                popup_cbf296e445f2aff2168254bb815111c6.setContent(html_9b5d687650313048472ebcfa6d71bc0d);
             
         
 
-        circle_marker_099266748325bc01afddf20b3536b3ab.bindPopup(popup_5409df927781eea164901fbde5d9468d)
+        circle_marker_bac93118ed22545ace4adf17be48ee1a.bindPopup(popup_cbf296e445f2aff2168254bb815111c6)
         ;
 
         
     
     
-            circle_marker_099266748325bc01afddf20b3536b3ab.bindTooltip(
+            circle_marker_bac93118ed22545ace4adf17be48ee1a.bindTooltip(
                 `<div>
                      Gabala: 0%
                  </div>`,
@@ -199,32 +199,32 @@
             );
         
     
-            var circle_marker_4bbb4abb0b11214410a7c09026b643be = L.circleMarker(
+            var circle_marker_7591be3560ba433580751be609a20772 = L.circleMarker(
                 [40.6828, 46.3606],
                 {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
-            ).addTo(map_597b57f92c83a117514a8ce8df12b587);
+            ).addTo(map_2c3d042dcf873efac4113dae963e5807);
         
     
-        var popup_9dd1557f4be87f032d4ac13393374802 = L.popup({
+        var popup_da765e4b8fa819df9f442cd6ef90a98b = L.popup({
   "maxWidth": 250,
 });
 
         
             
-                var html_b16a57cc24a27cd6ae8aa9a110852b47 = $(`<div id="html_b16a57cc24a27cd6ae8aa9a110852b47" style="width: 100.0%; height: 100.0%;"><b>Ganja</b><br>Date: 2026-05-23<br>Fire Risk: 1.3% (<b style='color:green'>Low</b>)<br>Temp: 20.4°C<br>Hum: 63.0%<br>Wind: 8.3 km/h<br>Rain: 1.9 mm<br></div>`)[0];
-                popup_9dd1557f4be87f032d4ac13393374802.setContent(html_b16a57cc24a27cd6ae8aa9a110852b47);
+                var html_77dbc5167767a2803c7ec582a9a3ba4c = $(`<div id="html_77dbc5167767a2803c7ec582a9a3ba4c" style="width: 100.0%; height: 100.0%;"><b>Ganja</b><br>Date: 2026-05-23<br>Fire Risk: 0.1% (<b style='color:green'>Low</b>)<br>Temp: 20.4°C<br>Hum: 62.9%<br>Wind: 8.3 km/h<br>Rain: 1.9 mm<br></div>`)[0];
+                popup_da765e4b8fa819df9f442cd6ef90a98b.setContent(html_77dbc5167767a2803c7ec582a9a3ba4c);
             
         
 
-        circle_marker_4bbb4abb0b11214410a7c09026b643be.bindPopup(popup_9dd1557f4be87f032d4ac13393374802)
+        circle_marker_7591be3560ba433580751be609a20772.bindPopup(popup_da765e4b8fa819df9f442cd6ef90a98b)
         ;
 
         
     
     
-            circle_marker_4bbb4abb0b11214410a7c09026b643be.bindTooltip(
+            circle_marker_7591be3560ba433580751be609a20772.bindTooltip(
                 `<div>
-                     Ganja: 1%
+                     Ganja: 0%
                  </div>`,
                 {
   "sticky": true,
@@ -232,32 +232,32 @@
             );
         
     
-            var circle_marker_bd28713fe22359afc5e2a62374659829 = L.circleMarker(
+            var circle_marker_61e81c3b7a7b665ed0cb7aa89c46e2e6 = L.circleMarker(
                 [39.2089, 48.2986],
                 {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
-            ).addTo(map_597b57f92c83a117514a8ce8df12b587);
+            ).addTo(map_2c3d042dcf873efac4113dae963e5807);
         
     
-        var popup_1334155d830ad1adf4de1a8455b51a60 = L.popup({
+        var popup_4f93859a0c6849364605eeb3f4ea2068 = L.popup({
   "maxWidth": 250,
 });
 
         
             
-                var html_04d3414e4e962aba7e62f2764454603a = $(`<div id="html_04d3414e4e962aba7e62f2764454603a" style="width: 100.0%; height: 100.0%;"><b>Jalilabad</b><br>Date: 2026-05-23<br>Fire Risk: 1.8% (<b style='color:green'>Low</b>)<br>Temp: 20.9°C<br>Hum: 71.8%<br>Wind: 9.3 km/h<br>Rain: 0.8 mm<br></div>`)[0];
-                popup_1334155d830ad1adf4de1a8455b51a60.setContent(html_04d3414e4e962aba7e62f2764454603a);
+                var html_2a9656a6e6508ea280c48be78a7af99f = $(`<div id="html_2a9656a6e6508ea280c48be78a7af99f" style="width: 100.0%; height: 100.0%;"><b>Jalilabad</b><br>Date: 2026-05-23<br>Fire Risk: 0.1% (<b style='color:green'>Low</b>)<br>Temp: 20.9°C<br>Hum: 71.8%<br>Wind: 9.3 km/h<br>Rain: 0.8 mm<br></div>`)[0];
+                popup_4f93859a0c6849364605eeb3f4ea2068.setContent(html_2a9656a6e6508ea280c48be78a7af99f);
             
         
 
-        circle_marker_bd28713fe22359afc5e2a62374659829.bindPopup(popup_1334155d830ad1adf4de1a8455b51a60)
+        circle_marker_61e81c3b7a7b665ed0cb7aa89c46e2e6.bindPopup(popup_4f93859a0c6849364605eeb3f4ea2068)
         ;
 
         
     
     
-            circle_marker_bd28713fe22359afc5e2a62374659829.bindTooltip(
+            circle_marker_61e81c3b7a7b665ed0cb7aa89c46e2e6.bindTooltip(
                 `<div>
-                     Jalilabad: 2%
+                     Jalilabad: 0%
                  </div>`,
                 {
   "sticky": true,
@@ -265,32 +265,32 @@
             );
         
     
-            var circle_marker_6cfae204f5285981b7e097ed88c57965 = L.circleMarker(
+            var circle_marker_4707bdf1f342f63ffb913dcd9c00fcb2 = L.circleMarker(
                 [41.4635, 48.806],
                 {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
-            ).addTo(map_597b57f92c83a117514a8ce8df12b587);
+            ).addTo(map_2c3d042dcf873efac4113dae963e5807);
         
     
-        var popup_7ed8f8e40ee19d190d1f579e7f52a415 = L.popup({
+        var popup_77d8da7015158cbd4a5be0b3da322bed = L.popup({
   "maxWidth": 250,
 });
 
         
             
-                var html_9f1913912c9dc7159afe3855369db832 = $(`<div id="html_9f1913912c9dc7159afe3855369db832" style="width: 100.0%; height: 100.0%;"><b>Khachmaz</b><br>Date: 2026-05-23<br>Fire Risk: 1.2% (<b style='color:green'>Low</b>)<br>Temp: 20.1°C<br>Hum: 70.6%<br>Wind: 9.8 km/h<br>Rain: 0.6 mm<br></div>`)[0];
-                popup_7ed8f8e40ee19d190d1f579e7f52a415.setContent(html_9f1913912c9dc7159afe3855369db832);
+                var html_5b0a19acca073ac191440901cef4782a = $(`<div id="html_5b0a19acca073ac191440901cef4782a" style="width: 100.0%; height: 100.0%;"><b>Khachmaz</b><br>Date: 2026-05-23<br>Fire Risk: 0.4% (<b style='color:green'>Low</b>)<br>Temp: 20.1°C<br>Hum: 70.6%<br>Wind: 9.8 km/h<br>Rain: 0.6 mm<br></div>`)[0];
+                popup_77d8da7015158cbd4a5be0b3da322bed.setContent(html_5b0a19acca073ac191440901cef4782a);
             
         
 
-        circle_marker_6cfae204f5285981b7e097ed88c57965.bindPopup(popup_7ed8f8e40ee19d190d1f579e7f52a415)
+        circle_marker_4707bdf1f342f63ffb913dcd9c00fcb2.bindPopup(popup_77d8da7015158cbd4a5be0b3da322bed)
         ;
 
         
     
     
-            circle_marker_6cfae204f5285981b7e097ed88c57965.bindTooltip(
+            circle_marker_4707bdf1f342f63ffb913dcd9c00fcb2.bindTooltip(
                 `<div>
-                     Khachmaz: 1%
+                     Khachmaz: 0%
                  </div>`,
                 {
   "sticky": true,
@@ -298,32 +298,32 @@
             );
         
     
-            var circle_marker_a61e50fa01bb967fea35f35a7bdd6908 = L.circleMarker(
+            var circle_marker_41543fb3a0bad3d81a28cd2aee22a6b4 = L.circleMarker(
                 [38.7523, 48.8475],
                 {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
-            ).addTo(map_597b57f92c83a117514a8ce8df12b587);
+            ).addTo(map_2c3d042dcf873efac4113dae963e5807);
         
     
-        var popup_0adc976cb2f9193a79cd092dc0876819 = L.popup({
+        var popup_66e6b94f1593c14444ff24d0f6880ec5 = L.popup({
   "maxWidth": 250,
 });
 
         
             
-                var html_4eb512a1ba91a26252c66135479f74d5 = $(`<div id="html_4eb512a1ba91a26252c66135479f74d5" style="width: 100.0%; height: 100.0%;"><b>Lankaran</b><br>Date: 2026-05-23<br>Fire Risk: 1.3% (<b style='color:green'>Low</b>)<br>Temp: 21.1°C<br>Hum: 72.3%<br>Wind: 7.9 km/h<br>Rain: 0.9 mm<br></div>`)[0];
-                popup_0adc976cb2f9193a79cd092dc0876819.setContent(html_4eb512a1ba91a26252c66135479f74d5);
+                var html_4ebdce47e2af74cf9d76d06acaaaf237 = $(`<div id="html_4ebdce47e2af74cf9d76d06acaaaf237" style="width: 100.0%; height: 100.0%;"><b>Lankaran</b><br>Date: 2026-05-23<br>Fire Risk: 0.1% (<b style='color:green'>Low</b>)<br>Temp: 21.1°C<br>Hum: 72.3%<br>Wind: 7.9 km/h<br>Rain: 0.9 mm<br></div>`)[0];
+                popup_66e6b94f1593c14444ff24d0f6880ec5.setContent(html_4ebdce47e2af74cf9d76d06acaaaf237);
             
         
 
-        circle_marker_a61e50fa01bb967fea35f35a7bdd6908.bindPopup(popup_0adc976cb2f9193a79cd092dc0876819)
+        circle_marker_41543fb3a0bad3d81a28cd2aee22a6b4.bindPopup(popup_66e6b94f1593c14444ff24d0f6880ec5)
         ;
 
         
     
     
-            circle_marker_a61e50fa01bb967fea35f35a7bdd6908.bindTooltip(
+            circle_marker_41543fb3a0bad3d81a28cd2aee22a6b4.bindTooltip(
                 `<div>
-                     Lankaran: 1%
+                     Lankaran: 0%
                  </div>`,
                 {
   "sticky": true,
@@ -331,32 +331,32 @@
             );
         
     
-            var circle_marker_b94efa3dec600031c1efd5c6f01e4df6 = L.circleMarker(
+            var circle_marker_8ca47787e31dd3950efc6648564d30ba = L.circleMarker(
                 [40.7639, 47.0595],
                 {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
-            ).addTo(map_597b57f92c83a117514a8ce8df12b587);
+            ).addTo(map_2c3d042dcf873efac4113dae963e5807);
         
     
-        var popup_3bccf2f208f9a1842d23b641a1010a55 = L.popup({
+        var popup_1e7ef6717cc5a9e78b9b0760612cec7c = L.popup({
   "maxWidth": 250,
 });
 
         
             
-                var html_4b71c83893f531d46513287c5da4c8bc = $(`<div id="html_4b71c83893f531d46513287c5da4c8bc" style="width: 100.0%; height: 100.0%;"><b>Mingachevir</b><br>Date: 2026-05-23<br>Fire Risk: 1.4% (<b style='color:green'>Low</b>)<br>Temp: 22.5°C<br>Hum: 64.3%<br>Wind: 9.8 km/h<br>Rain: 2.0 mm<br></div>`)[0];
-                popup_3bccf2f208f9a1842d23b641a1010a55.setContent(html_4b71c83893f531d46513287c5da4c8bc);
+                var html_b6e24ebeacf60d876255f71180d64691 = $(`<div id="html_b6e24ebeacf60d876255f71180d64691" style="width: 100.0%; height: 100.0%;"><b>Mingachevir</b><br>Date: 2026-05-23<br>Fire Risk: 0.1% (<b style='color:green'>Low</b>)<br>Temp: 22.5°C<br>Hum: 64.4%<br>Wind: 9.8 km/h<br>Rain: 2.1 mm<br></div>`)[0];
+                popup_1e7ef6717cc5a9e78b9b0760612cec7c.setContent(html_b6e24ebeacf60d876255f71180d64691);
             
         
 
-        circle_marker_b94efa3dec600031c1efd5c6f01e4df6.bindPopup(popup_3bccf2f208f9a1842d23b641a1010a55)
+        circle_marker_8ca47787e31dd3950efc6648564d30ba.bindPopup(popup_1e7ef6717cc5a9e78b9b0760612cec7c)
         ;
 
         
     
     
-            circle_marker_b94efa3dec600031c1efd5c6f01e4df6.bindTooltip(
+            circle_marker_8ca47787e31dd3950efc6648564d30ba.bindTooltip(
                 `<div>
-                     Mingachevir: 1%
+                     Mingachevir: 0%
                  </div>`,
                 {
   "sticky": true,
@@ -364,32 +364,32 @@
             );
         
     
-            var circle_marker_9eae77cbb12ee5f68b4dc264356b0062 = L.circleMarker(
+            var circle_marker_c2a403318877a0d9e7c76561e4a4cc2d = L.circleMarker(
                 [39.2089, 45.4122],
                 {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
-            ).addTo(map_597b57f92c83a117514a8ce8df12b587);
+            ).addTo(map_2c3d042dcf873efac4113dae963e5807);
         
     
-        var popup_3f787430c6705e5373454885ca6feb3c = L.popup({
+        var popup_e93a8dcb79e14a822e078397c0b74744 = L.popup({
   "maxWidth": 250,
 });
 
         
             
-                var html_f6f6bd5ff818cc67a40e0a9b76948b71 = $(`<div id="html_f6f6bd5ff818cc67a40e0a9b76948b71" style="width: 100.0%; height: 100.0%;"><b>Nakhchivan</b><br>Date: 2026-05-23<br>Fire Risk: 1.3% (<b style='color:green'>Low</b>)<br>Temp: 20.1°C<br>Hum: 48.5%<br>Wind: 7.4 km/h<br>Rain: 1.0 mm<br></div>`)[0];
-                popup_3f787430c6705e5373454885ca6feb3c.setContent(html_f6f6bd5ff818cc67a40e0a9b76948b71);
+                var html_6cdad80b8b37f464fb2aee66b7748869 = $(`<div id="html_6cdad80b8b37f464fb2aee66b7748869" style="width: 100.0%; height: 100.0%;"><b>Nakhchivan</b><br>Date: 2026-05-23<br>Fire Risk: 0.0% (<b style='color:green'>Low</b>)<br>Temp: 20.1°C<br>Hum: 48.5%<br>Wind: 7.4 km/h<br>Rain: 1.0 mm<br></div>`)[0];
+                popup_e93a8dcb79e14a822e078397c0b74744.setContent(html_6cdad80b8b37f464fb2aee66b7748869);
             
         
 
-        circle_marker_9eae77cbb12ee5f68b4dc264356b0062.bindPopup(popup_3f787430c6705e5373454885ca6feb3c)
+        circle_marker_c2a403318877a0d9e7c76561e4a4cc2d.bindPopup(popup_e93a8dcb79e14a822e078397c0b74744)
         ;
 
         
     
     
-            circle_marker_9eae77cbb12ee5f68b4dc264356b0062.bindTooltip(
+            circle_marker_c2a403318877a0d9e7c76561e4a4cc2d.bindTooltip(
                 `<div>
-                     Nakhchivan: 1%
+                     Nakhchivan: 0%
                  </div>`,
                 {
   "sticky": true,
@@ -397,32 +397,32 @@
             );
         
     
-            var circle_marker_e5665f4fc5ee74683e55b0adddf9d764 = L.circleMarker(
+            var circle_marker_2ec9586b7ec2c0bf06b1831df4b6a933 = L.circleMarker(
                 [41.3611, 48.5261],
                 {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
-            ).addTo(map_597b57f92c83a117514a8ce8df12b587);
+            ).addTo(map_2c3d042dcf873efac4113dae963e5807);
         
     
-        var popup_d84f792a77508d905e927c96326d9e05 = L.popup({
+        var popup_72cde4a7721a443436b8c28c23f6f8ac = L.popup({
   "maxWidth": 250,
 });
 
         
             
-                var html_e6def413b911cece64f9951d50949a13 = $(`<div id="html_e6def413b911cece64f9951d50949a13" style="width: 100.0%; height: 100.0%;"><b>Quba</b><br>Date: 2026-05-23<br>Fire Risk: 0.7% (<b style='color:green'>Low</b>)<br>Temp: 17.3°C<br>Hum: 82.6%<br>Wind: 7.2 km/h<br>Rain: 1.6 mm<br></div>`)[0];
-                popup_d84f792a77508d905e927c96326d9e05.setContent(html_e6def413b911cece64f9951d50949a13);
+                var html_b700aa362a3fcec8c16d5d370fc52f1c = $(`<div id="html_b700aa362a3fcec8c16d5d370fc52f1c" style="width: 100.0%; height: 100.0%;"><b>Quba</b><br>Date: 2026-05-23<br>Fire Risk: 0.2% (<b style='color:green'>Low</b>)<br>Temp: 17.3°C<br>Hum: 82.6%<br>Wind: 7.2 km/h<br>Rain: 1.6 mm<br></div>`)[0];
+                popup_72cde4a7721a443436b8c28c23f6f8ac.setContent(html_b700aa362a3fcec8c16d5d370fc52f1c);
             
         
 
-        circle_marker_e5665f4fc5ee74683e55b0adddf9d764.bindPopup(popup_d84f792a77508d905e927c96326d9e05)
+        circle_marker_2ec9586b7ec2c0bf06b1831df4b6a933.bindPopup(popup_72cde4a7721a443436b8c28c23f6f8ac)
         ;
 
         
     
     
-            circle_marker_e5665f4fc5ee74683e55b0adddf9d764.bindTooltip(
+            circle_marker_2ec9586b7ec2c0bf06b1831df4b6a933.bindTooltip(
                 `<div>
-                     Quba: 1%
+                     Quba: 0%
                  </div>`,
                 {
   "sticky": true,
@@ -430,32 +430,32 @@
             );
         
     
-            var circle_marker_092a02382f70b898e48775123754b357 = L.circleMarker(
+            var circle_marker_2505f6d81a88d203fee7099607ccb6f2 = L.circleMarker(
                 [41.2156, 48.8544],
                 {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
-            ).addTo(map_597b57f92c83a117514a8ce8df12b587);
+            ).addTo(map_2c3d042dcf873efac4113dae963e5807);
         
     
-        var popup_80a4c7f027faf4383d6cb4ee48b05c89 = L.popup({
+        var popup_207a51241b709292fc550bd71e5d5733 = L.popup({
   "maxWidth": 250,
 });
 
         
             
-                var html_2fa8890c807bcaa2a977ce6f2edd3859 = $(`<div id="html_2fa8890c807bcaa2a977ce6f2edd3859" style="width: 100.0%; height: 100.0%;"><b>Shabran</b><br>Date: 2026-05-23<br>Fire Risk: 1.4% (<b style='color:green'>Low</b>)<br>Temp: 16.8°C<br>Hum: 67.4%<br>Wind: 9.9 km/h<br>Rain: 0.6 mm<br></div>`)[0];
-                popup_80a4c7f027faf4383d6cb4ee48b05c89.setContent(html_2fa8890c807bcaa2a977ce6f2edd3859);
+                var html_a4826c72223c2f6dbaedd7cc61a492f3 = $(`<div id="html_a4826c72223c2f6dbaedd7cc61a492f3" style="width: 100.0%; height: 100.0%;"><b>Shabran</b><br>Date: 2026-05-23<br>Fire Risk: 0.5% (<b style='color:green'>Low</b>)<br>Temp: 17.3°C<br>Hum: 67.4%<br>Wind: 9.9 km/h<br>Rain: 0.6 mm<br></div>`)[0];
+                popup_207a51241b709292fc550bd71e5d5733.setContent(html_a4826c72223c2f6dbaedd7cc61a492f3);
             
         
 
-        circle_marker_092a02382f70b898e48775123754b357.bindPopup(popup_80a4c7f027faf4383d6cb4ee48b05c89)
+        circle_marker_2505f6d81a88d203fee7099607ccb6f2.bindPopup(popup_207a51241b709292fc550bd71e5d5733)
         ;
 
         
     
     
-            circle_marker_092a02382f70b898e48775123754b357.bindTooltip(
+            circle_marker_2505f6d81a88d203fee7099607ccb6f2.bindTooltip(
                 `<div>
-                     Shabran: 1%
+                     Shabran: 0%
                  </div>`,
                 {
   "sticky": true,
@@ -463,32 +463,32 @@
             );
         
     
-            var circle_marker_3048caf7399ded7b7e2b7bb41bbfb896 = L.circleMarker(
+            var circle_marker_ed85e77501fdc2ec03c16f3a9c428a17 = L.circleMarker(
                 [41.1975, 47.1694],
                 {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
-            ).addTo(map_597b57f92c83a117514a8ce8df12b587);
+            ).addTo(map_2c3d042dcf873efac4113dae963e5807);
         
     
-        var popup_fa5462a29980555013577988c2fa2f6c = L.popup({
+        var popup_7d7d462d4c9477dd8d168055c84a3b54 = L.popup({
   "maxWidth": 250,
 });
 
         
             
-                var html_d0fc5fa25337dc7ef35baed8afd272d3 = $(`<div id="html_d0fc5fa25337dc7ef35baed8afd272d3" style="width: 100.0%; height: 100.0%;"><b>Shaki</b><br>Date: 2026-05-23<br>Fire Risk: 0.5% (<b style='color:green'>Low</b>)<br>Temp: 18.5°C<br>Hum: 67.4%<br>Wind: 6.5 km/h<br>Rain: 4.8 mm<br></div>`)[0];
-                popup_fa5462a29980555013577988c2fa2f6c.setContent(html_d0fc5fa25337dc7ef35baed8afd272d3);
+                var html_903633ae1ec2bfd04821ac060d4f1ce3 = $(`<div id="html_903633ae1ec2bfd04821ac060d4f1ce3" style="width: 100.0%; height: 100.0%;"><b>Shaki</b><br>Date: 2026-05-23<br>Fire Risk: 0.0% (<b style='color:green'>Low</b>)<br>Temp: 18.5°C<br>Hum: 67.4%<br>Wind: 6.5 km/h<br>Rain: 4.8 mm<br></div>`)[0];
+                popup_7d7d462d4c9477dd8d168055c84a3b54.setContent(html_903633ae1ec2bfd04821ac060d4f1ce3);
             
         
 
-        circle_marker_3048caf7399ded7b7e2b7bb41bbfb896.bindPopup(popup_fa5462a29980555013577988c2fa2f6c)
+        circle_marker_ed85e77501fdc2ec03c16f3a9c428a17.bindPopup(popup_7d7d462d4c9477dd8d168055c84a3b54)
         ;
 
         
     
     
-            circle_marker_3048caf7399ded7b7e2b7bb41bbfb896.bindTooltip(
+            circle_marker_ed85e77501fdc2ec03c16f3a9c428a17.bindTooltip(
                 `<div>
-                     Shaki: 1%
+                     Shaki: 0%
                  </div>`,
                 {
   "sticky": true,
@@ -496,32 +496,32 @@
             );
         
     
-            var circle_marker_3d5eefd3748058224bf5acbc25cd4740 = L.circleMarker(
+            var circle_marker_82256568e5f4b0e1972cb9294295bf7e = L.circleMarker(
                 [40.6303, 48.6414],
                 {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
-            ).addTo(map_597b57f92c83a117514a8ce8df12b587);
+            ).addTo(map_2c3d042dcf873efac4113dae963e5807);
         
     
-        var popup_5824bbf7e00b36dea875d0b66e9d43a8 = L.popup({
+        var popup_17a1203c31fb68b1b0a4819c3ed28018 = L.popup({
   "maxWidth": 250,
 });
 
         
             
-                var html_e0ec092ae7d4557cd37a1304645cc798 = $(`<div id="html_e0ec092ae7d4557cd37a1304645cc798" style="width: 100.0%; height: 100.0%;"><b>Shamakhi</b><br>Date: 2026-05-23<br>Fire Risk: 0.6% (<b style='color:green'>Low</b>)<br>Temp: 12.3°C<br>Hum: 80.4%<br>Wind: 6.7 km/h<br>Rain: 2.9 mm<br></div>`)[0];
-                popup_5824bbf7e00b36dea875d0b66e9d43a8.setContent(html_e0ec092ae7d4557cd37a1304645cc798);
+                var html_4c65cf3fd4ce89c5faf60fc9f4d68397 = $(`<div id="html_4c65cf3fd4ce89c5faf60fc9f4d68397" style="width: 100.0%; height: 100.0%;"><b>Shamakhi</b><br>Date: 2026-05-23<br>Fire Risk: 0.1% (<b style='color:green'>Low</b>)<br>Temp: 12.3°C<br>Hum: 80.4%<br>Wind: 6.7 km/h<br>Rain: 2.8 mm<br></div>`)[0];
+                popup_17a1203c31fb68b1b0a4819c3ed28018.setContent(html_4c65cf3fd4ce89c5faf60fc9f4d68397);
             
         
 
-        circle_marker_3d5eefd3748058224bf5acbc25cd4740.bindPopup(popup_5824bbf7e00b36dea875d0b66e9d43a8)
+        circle_marker_82256568e5f4b0e1972cb9294295bf7e.bindPopup(popup_17a1203c31fb68b1b0a4819c3ed28018)
         ;
 
         
     
     
-            circle_marker_3d5eefd3748058224bf5acbc25cd4740.bindTooltip(
+            circle_marker_82256568e5f4b0e1972cb9294295bf7e.bindTooltip(
                 `<div>
-                     Shamakhi: 1%
+                     Shamakhi: 0%
                  </div>`,
                 {
   "sticky": true,
@@ -529,32 +529,32 @@
             );
         
     
-            var circle_marker_057fd655256a4850e336c5275ca493c7 = L.circleMarker(
+            var circle_marker_13213199e1aa0639382e5863d7e996d3 = L.circleMarker(
                 [39.9317, 48.9299],
                 {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
-            ).addTo(map_597b57f92c83a117514a8ce8df12b587);
+            ).addTo(map_2c3d042dcf873efac4113dae963e5807);
         
     
-        var popup_1c0cc8817814cc3bb543ec961e61776a = L.popup({
+        var popup_9e51bd66a88071d3e7ef93cb4c19b741 = L.popup({
   "maxWidth": 250,
 });
 
         
             
-                var html_f401cefb99a3a7148a6bfb244f450e61 = $(`<div id="html_f401cefb99a3a7148a6bfb244f450e61" style="width: 100.0%; height: 100.0%;"><b>Shirvan</b><br>Date: 2026-05-23<br>Fire Risk: 1.4% (<b style='color:green'>Low</b>)<br>Temp: 22.3°C<br>Hum: 73.8%<br>Wind: 10.0 km/h<br>Rain: 1.2 mm<br></div>`)[0];
-                popup_1c0cc8817814cc3bb543ec961e61776a.setContent(html_f401cefb99a3a7148a6bfb244f450e61);
+                var html_daeabd6245f7011b22635bddb72fcbdd = $(`<div id="html_daeabd6245f7011b22635bddb72fcbdd" style="width: 100.0%; height: 100.0%;"><b>Shirvan</b><br>Date: 2026-05-23<br>Fire Risk: 0.2% (<b style='color:green'>Low</b>)<br>Temp: 22.3°C<br>Hum: 73.8%<br>Wind: 10.0 km/h<br>Rain: 1.2 mm<br></div>`)[0];
+                popup_9e51bd66a88071d3e7ef93cb4c19b741.setContent(html_daeabd6245f7011b22635bddb72fcbdd);
             
         
 
-        circle_marker_057fd655256a4850e336c5275ca493c7.bindPopup(popup_1c0cc8817814cc3bb543ec961e61776a)
+        circle_marker_13213199e1aa0639382e5863d7e996d3.bindPopup(popup_9e51bd66a88071d3e7ef93cb4c19b741)
         ;
 
         
     
     
-            circle_marker_057fd655256a4850e336c5275ca493c7.bindTooltip(
+            circle_marker_13213199e1aa0639382e5863d7e996d3.bindTooltip(
                 `<div>
-                     Shirvan: 1%
+                     Shirvan: 0%
                  </div>`,
                 {
   "sticky": true,
@@ -562,32 +562,32 @@
             );
         
     
-            var circle_marker_1bcbbfcdc8911fce193b2d769c65f36b = L.circleMarker(
+            var circle_marker_b3d11fd15ce2ce730e7d8a0173bd899e = L.circleMarker(
                 [40.6183, 47.15],
                 {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
-            ).addTo(map_597b57f92c83a117514a8ce8df12b587);
+            ).addTo(map_2c3d042dcf873efac4113dae963e5807);
         
     
-        var popup_4d6acabe3c74a0a83b5cdfa0d4447225 = L.popup({
+        var popup_edde20651f07aca39b16ee1f611ed115 = L.popup({
   "maxWidth": 250,
 });
 
         
             
-                var html_5fb5929784aee3b791db163f1f640444 = $(`<div id="html_5fb5929784aee3b791db163f1f640444" style="width: 100.0%; height: 100.0%;"><b>Yevlakh</b><br>Date: 2026-05-23<br>Fire Risk: 1.1% (<b style='color:green'>Low</b>)<br>Temp: 22.6°C<br>Hum: 66.8%<br>Wind: 8.7 km/h<br>Rain: 1.8 mm<br></div>`)[0];
-                popup_4d6acabe3c74a0a83b5cdfa0d4447225.setContent(html_5fb5929784aee3b791db163f1f640444);
+                var html_16e5a6e0bb67ed28a87c116c62adbace = $(`<div id="html_16e5a6e0bb67ed28a87c116c62adbace" style="width: 100.0%; height: 100.0%;"><b>Yevlakh</b><br>Date: 2026-05-23<br>Fire Risk: 0.0% (<b style='color:green'>Low</b>)<br>Temp: 22.6°C<br>Hum: 69.1%<br>Wind: 8.7 km/h<br>Rain: 1.9 mm<br></div>`)[0];
+                popup_edde20651f07aca39b16ee1f611ed115.setContent(html_16e5a6e0bb67ed28a87c116c62adbace);
             
         
 
-        circle_marker_1bcbbfcdc8911fce193b2d769c65f36b.bindPopup(popup_4d6acabe3c74a0a83b5cdfa0d4447225)
+        circle_marker_b3d11fd15ce2ce730e7d8a0173bd899e.bindPopup(popup_edde20651f07aca39b16ee1f611ed115)
         ;
 
         
     
     
-            circle_marker_1bcbbfcdc8911fce193b2d769c65f36b.bindTooltip(
+            circle_marker_b3d11fd15ce2ce730e7d8a0173bd899e.bindTooltip(
                 `<div>
-                     Yevlakh: 1%
+                     Yevlakh: 0%
                  </div>`,
                 {
   "sticky": true,
@@ -595,30 +595,30 @@
             );
         
     
-            var circle_marker_ef5e6cdcee5406dc632950c3bec0c8a3 = L.circleMarker(
+            var circle_marker_16c7769222b7aee5846f164114d638b8 = L.circleMarker(
                 [41.6296, 46.6433],
                 {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
-            ).addTo(map_597b57f92c83a117514a8ce8df12b587);
+            ).addTo(map_2c3d042dcf873efac4113dae963e5807);
         
     
-        var popup_b5d9b3fd2c145ce22d65dfea43442fb3 = L.popup({
+        var popup_26488dd5c0fdec91f41ad5020b11024a = L.popup({
   "maxWidth": 250,
 });
 
         
             
-                var html_44058bfb1eff074af2236ebbc5f9d65b = $(`<div id="html_44058bfb1eff074af2236ebbc5f9d65b" style="width: 100.0%; height: 100.0%;"><b>Zaqatala</b><br>Date: 2026-05-23<br>Fire Risk: 0.4% (<b style='color:green'>Low</b>)<br>Temp: 18.5°C<br>Hum: 70.8%<br>Wind: 4.2 km/h<br>Rain: 4.5 mm<br></div>`)[0];
-                popup_b5d9b3fd2c145ce22d65dfea43442fb3.setContent(html_44058bfb1eff074af2236ebbc5f9d65b);
+                var html_7751d798322b2ccff70677dff0b55a63 = $(`<div id="html_7751d798322b2ccff70677dff0b55a63" style="width: 100.0%; height: 100.0%;"><b>Zaqatala</b><br>Date: 2026-05-23<br>Fire Risk: 0.0% (<b style='color:green'>Low</b>)<br>Temp: 18.5°C<br>Hum: 70.7%<br>Wind: 4.2 km/h<br>Rain: 4.5 mm<br></div>`)[0];
+                popup_26488dd5c0fdec91f41ad5020b11024a.setContent(html_7751d798322b2ccff70677dff0b55a63);
             
         
 
-        circle_marker_ef5e6cdcee5406dc632950c3bec0c8a3.bindPopup(popup_b5d9b3fd2c145ce22d65dfea43442fb3)
+        circle_marker_16c7769222b7aee5846f164114d638b8.bindPopup(popup_26488dd5c0fdec91f41ad5020b11024a)
         ;
 
         
     
     
-            circle_marker_ef5e6cdcee5406dc632950c3bec0c8a3.bindTooltip(
+            circle_marker_16c7769222b7aee5846f164114d638b8.bindTooltip(
                 `<div>
                      Zaqatala: 0%
                  </div>`,

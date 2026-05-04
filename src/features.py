@@ -3,6 +3,10 @@ ARIAN Wildfire Prediction — Feature Engineering Utilities
 ==========================================================
 Reusable functions for creating weather and wildfire features.
 """
+from __future__ import annotations
+
+from typing import List, Optional
+
 import numpy as np
 import pandas as pd
 
@@ -11,7 +15,7 @@ import pandas as pd
 # Calendar / Cyclical Features
 # ═══════════════════════════════════════════════════════════════════════════
 
-def add_calendar_features(df, date_col="Date"):
+def add_calendar_features(df: pd.DataFrame, date_col: str = "Date") -> pd.DataFrame:
     """Add calendar and cyclical time features."""
     dt = pd.to_datetime(df[date_col])
     df["Year"]       = dt.dt.year
@@ -38,7 +42,7 @@ def add_calendar_features(df, date_col="Date"):
     return df
 
 
-def add_hourly_calendar(df, ts_col="Timestamp"):
+def add_hourly_calendar(df: pd.DataFrame, ts_col: str = "Timestamp") -> pd.DataFrame:
     """Add hour-level cyclical features."""
     dt = pd.to_datetime(df[ts_col])
     df["Hour"]      = dt.dt.hour
@@ -52,7 +56,7 @@ def add_hourly_calendar(df, ts_col="Timestamp"):
 # Lag & Rolling Features
 # ═══════════════════════════════════════════════════════════════════════════
 
-def build_lag_features(group, variables, lag_days, date_col="Date"):
+def build_lag_features(group: pd.DataFrame, variables: List[str], lag_days: List[int], date_col: str = "Date") -> pd.DataFrame:
     """Create lag features for a single city group (pre-sorted by date)."""
     g = group.sort_values(date_col).copy()
     for var in variables:
@@ -63,7 +67,7 @@ def build_lag_features(group, variables, lag_days, date_col="Date"):
     return g
 
 
-def build_rolling_features(group, variables, windows, date_col="Date"):
+def build_rolling_features(group: pd.DataFrame, variables: List[str], windows: List[int], date_col: str = "Date") -> pd.DataFrame:
     """Create rolling mean/std features (shifted by 1 to prevent leakage)."""
     g = group.sort_values(date_col).copy()
     for var in variables:
@@ -81,7 +85,7 @@ def build_rolling_features(group, variables, windows, date_col="Date"):
 # Fire Weather Index (FWI) Proxy
 # ═══════════════════════════════════════════════════════════════════════════
 
-def compute_fwi_proxy(group, date_col="Date"):
+def compute_fwi_proxy(group: pd.DataFrame, date_col: str = "Date") -> pd.DataFrame:
     """Compute simplified Canadian FWI system proxies for one city."""
     g = group.sort_values(date_col).copy()
 
@@ -110,14 +114,14 @@ def compute_fwi_proxy(group, date_col="Date"):
 # Wildfire-Specific Features
 # ═══════════════════════════════════════════════════════════════════════════
 
-def compute_vpd(temp_c, rh_pct):
+def compute_vpd(temp_c: pd.Series, rh_pct: pd.Series) -> pd.Series:
     """Vapor Pressure Deficit (kPa) — higher = drier air = more fire risk."""
     es = 0.6108 * np.exp((17.27 * temp_c) / (temp_c + 237.3))
     ea = es * (rh_pct / 100.0)
     return (es - ea).clip(lower=0)
 
 
-def compute_dew_point(temp_c, rh_pct):
+def compute_dew_point(temp_c: pd.Series, rh_pct: pd.Series) -> pd.Series:
     """Approximate dew point temperature (Magnus formula)."""
     a, b = 17.27, 237.3
     rh_safe = rh_pct.clip(lower=1) / 100.0
@@ -125,7 +129,7 @@ def compute_dew_point(temp_c, rh_pct):
     return (b * alpha) / (a - alpha)
 
 
-def compute_heat_index(temp_c, rh_pct):
+def compute_heat_index(temp_c: pd.Series, rh_pct: pd.Series) -> np.ndarray:
     """Simplified heat index (valid for T > 27°C)."""
     T = temp_c * 9 / 5 + 32  # to Fahrenheit
     HI = (-42.379 + 2.04901523 * T + 10.14333127 * rh_pct
@@ -137,7 +141,7 @@ def compute_heat_index(temp_c, rh_pct):
     return np.where(temp_c > 27, HI_C, temp_c)
 
 
-def add_wildfire_weather_features(df):
+def add_wildfire_weather_features(df: pd.DataFrame) -> pd.DataFrame:
     """Add VPD, dew point, heat index, drought proxy, dry-day features."""
     T = df.get("Temperature_C_mean", df.get("Temperature_C", pd.Series(0, index=df.index)))
     H = df.get("Humidity_percent_mean", df.get("Humidity_percent", pd.Series(50, index=df.index)))
@@ -178,7 +182,7 @@ def add_wildfire_weather_features(df):
     return df
 
 
-def add_historical_fire_features(df, date_col="Date"):
+def add_historical_fire_features(df: pd.DataFrame, date_col: str = "Date") -> pd.DataFrame:
     """Add historical fire-count features per city (strictly lagged)."""
     if "Fire_Occurred" not in df.columns:
         return df
@@ -218,7 +222,7 @@ def add_historical_fire_features(df, date_col="Date"):
     return df
 
 
-def add_vegetation_interactions(df):
+def add_vegetation_interactions(df: pd.DataFrame) -> pd.DataFrame:
     """Create interaction features between vegetation and weather."""
     ndvi = df.get("NDVI", pd.Series(0, index=df.index))
     drought = df.get("Rainfall_Deficit", df.get("DC_proxy", pd.Series(0, index=df.index)))
@@ -236,7 +240,7 @@ def add_vegetation_interactions(df):
 # Anomaly Features
 # ═══════════════════════════════════════════════════════════════════════════
 
-def add_anomaly_features(df, variables=None):
+def add_anomaly_features(df: pd.DataFrame, variables: Optional[List[str]] = None) -> pd.DataFrame:
     """Compute anomaly = value - city monthly mean (from training data only)."""
     if variables is None:
         variables = ["Temperature_C_mean", "Humidity_percent_mean", "Rain_mm_sum"]
