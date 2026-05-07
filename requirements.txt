@@ -36,6 +36,11 @@ plotly>=5.18
 # NB06: Climate Report
 # (no additional deps)
 
+# Pipeline runner (pipeline.py)
+nbformat>=5.9
+nbconvert>=7.14
+ipykernel>=6.29
+
 # Visualization (all notebooks)
 matplotlib>=3.8
 seaborn>=0.13

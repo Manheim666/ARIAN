@@ -26,6 +26,7 @@ async function loadData() {
     fetch("./data/metrics.json"),
     fetch("./data/hourly_forecast_168h.json"),
   ]);
+  if (!fRes.ok || !mRes.ok || !hRes.ok) throw new Error("Data file not found (HTTP " + [fRes.status,mRes.status,hRes.status].join("/") + ")");
   forecast       = await fRes.json();
   metrics        = await mRes.json();
   hourlyForecast = await hRes.json();
