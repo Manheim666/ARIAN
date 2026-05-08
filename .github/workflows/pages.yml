@@ -31,18 +31,37 @@ jobs:
         uses: actions/checkout@v4
         with:
           lfs: true
+          fetch-depth: 0
 
-      - name: Pull Git LFS files
+      - name: Install Git LFS and pull files
         run: |
+          git lfs install
           git lfs pull
-          grep -R "version https://git-lfs.github.com/spec/v1" -n docs || true
+
+      - name: Check that docs does not contain LFS pointer files
+        run: |
+          echo "Checking docs folder for Git LFS pointer files..."
+
+          if grep -R "version https://git-lfs.github.com/spec/v1" -n docs; then
+            echo "ERROR: Git LFS pointer files found inside docs/"
+            echo "GitHub Pages cannot deploy LFS pointer files as a website."
+            echo "Fix locally with:"
+            echo "  git lfs untrack 'docs/**'"
+            echo "  git rm --cached -r docs"
+            echo "  git add .gitattributes docs"
+            echo "  git commit -m 'Fix docs files not using LFS'"
+            echo "  git push origin main"
+            exit 1
+          else
+            echo "OK: No LFS pointer files found in docs/"
+          fi
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Install dependencies
+      - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
 
@@ -66,15 +85,32 @@ jobs:
         run: |
           python run_pipeline.py
 
-      - name: Commit updated files
+      - name: Check generated docs again
+        run: |
+          echo "Checking generated docs folder..."
+
+          if [ ! -f docs/index.html ]; then
+            echo "ERROR: docs/index.html does not exist."
+            echo "Your GitHub Pages site needs docs/index.html."
+            exit 1
+          fi
+
+          if grep -R "version https://git-lfs.github.com/spec/v1" -n docs; then
+            echo "ERROR: Pipeline generated or kept LFS pointer files inside docs/"
+            exit 1
+          fi
+
+          echo "OK: docs/index.html exists and docs has no LFS pointer files."
+
+      - name: Commit updated dashboard files
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          git add docs dashboard/data data/processed outputs models . || true
+          git add docs dashboard/data || true
 
           if git diff --cached --quiet; then
-            echo "No changes to commit"
+            echo "No dashboard changes to commit"
           else
             git commit -m "Daily dashboard update"
             git push origin HEAD:${{ github.ref_name }}
