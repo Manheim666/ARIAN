@@ -1,11 +1,13 @@
 # Python
 __pycache__/
+**/__pycache__/
 *.pyc
 *.pyo
 .ipynb_checkpoints/
 
 # CatBoost training artifacts
 catboost_info/
+notebooks/catboost_info/
 
 # IDE
 .vscode/
@@ -15,13 +17,28 @@ catboost_info/
 .DS_Store
 Thumbs.db
 
-# Requests HTTP cache (large, regenerated on run)
+# HTTP cache
 data/raw/.cache.sqlite
 
 # Notebook artifacts
 notebooks/cache/
 notebooks/logs/
 
+# Pipeline runner logs
+logs/
+
 # Temp files
 *.tmp
 *.bak
+
+# Model artifacts (large binary files)
+models/**/*.joblib
+models/**/*.pkl
+models/**/*.h5
+models/**/*.cbm
+
+# Local environments
+.venv/
+venv/
+.env
+local/
