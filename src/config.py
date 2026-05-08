@@ -1,21 +1,21 @@
 """
-ARIAN Wildfire Prediction — Central Configuration
+MANHEIM Wildfire Prediction — Central Configuration
 ===================================================
 All shared constants, paths, city definitions, and column lists.
 Import from any notebook:  from src.config import *
 """
-import os, sys
+import os, sys, subprocess
 from pathlib import Path
 
 # ── Project root detection ────────────────────────────────────────────────
 def detect_project_root() -> Path:
-    if os.environ.get("ARIAN_ROOT"):
-        return Path(os.environ["ARIAN_ROOT"]).expanduser().resolve()
+    if os.environ.get("MANHEIM_ROOT"):
+        return Path(os.environ["MANHEIM_ROOT"]).expanduser().resolve()
     if "google.colab" in sys.modules:
         from google.colab import drive
         if not os.path.ismount("/content/drive"):
             drive.mount("/content/drive")
-        return Path("/content/drive/MyDrive/ARIAN_Data")
+        return Path("/content/drive/MyDrive/MANHEIM_Data")
     here = Path.cwd().resolve()
     for cand in [here, *here.parents]:
         if (cand / "data").is_dir() and (cand / "notebooks").is_dir():
@@ -129,3 +129,22 @@ FORECAST_30D   = OUTPUTS / "weather_forecast_30d.parquet"
 FORECAST_168H  = OUTPUTS / "weather_forecast_168h.parquet"
 RISK_30D       = OUTPUTS / "wildfire_risk_30d.parquet"
 RISK_168H      = OUTPUTS / "wildfire_risk_168h.parquet"
+
+# ── GPU detection ────────────────────────────────────────────────────────
+def _detect_gpu() -> bool:
+    """Return True if an NVIDIA GPU is available."""
+    try:
+        r = subprocess.run(
+            ["nvidia-smi", "--query-gpu=name", "--format=csv,noheader"],
+            capture_output=True, text=True, timeout=5,
+        )
+        return r.returncode == 0 and len(r.stdout.strip()) > 0
+    except Exception:
+        return False
+
+GPU_AVAILABLE = _detect_gpu()
+
+# Per-library GPU keyword arguments (empty dict when no GPU)
+XGB_GPU_PARAMS = {"device": "cuda"} if GPU_AVAILABLE else {}
+CB_GPU_PARAMS  = {"task_type": "GPU"} if GPU_AVAILABLE else {}
+LGB_GPU_PARAMS = {"device": "gpu"} if GPU_AVAILABLE else {}

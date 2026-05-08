@@ -1,1 +1,1 @@
-# ARIAN Wildfire Prediction — shared utilities
+# MANHEIM Wildfire Prediction — shared utilities

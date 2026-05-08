@@ -1,5 +1,5 @@
 """
-ARIAN Wildfire Prediction — Feature Engineering Utilities
+MANHEIM Wildfire Prediction — Feature Engineering Utilities
 ==========================================================
 Reusable functions for creating weather and wildfire features.
 """
@@ -236,13 +236,39 @@ def add_vegetation_interactions(df):
 # Anomaly Features
 # ═══════════════════════════════════════════════════════════════════════════
 
-def add_anomaly_features(df, variables=None):
-    """Compute anomaly = value - city monthly mean (from training data only)."""
+def add_anomaly_features(df, variables=None, train_monthly_means=None):
+    """Compute anomaly = value - city monthly mean.
+
+    To avoid leakage: pass train_monthly_means computed from training data only.
+    If None, computes from df itself (use only during EDA, not during model training).
+
+    train_monthly_means: dict {(city, month): {variable: mean_value}}
+    """
     if variables is None:
         variables = ["Temperature_C_mean", "Humidity_percent_mean", "Rain_mm_sum"]
     for var in variables:
         if var not in df.columns:
             continue
-        monthly_mean = df.groupby(["City", "Month"])[var].transform("mean")
-        df[f"{var}_anomaly"] = df[var] - monthly_mean
+        if train_monthly_means is not None:
+            def _lookup_mean(row, v=var):
+                key = (row.get("City", ""), row.get("Month", 0))
+                city_month = train_monthly_means.get(key, {})
+                return city_month.get(v, np.nan)
+            means = df.apply(_lookup_mean, axis=1)
+        else:
+            means = df.groupby(["City", "Month"])[var].transform("mean")
+        df[f"{var}_anomaly"] = df[var] - means
     return df
+
+
+def compute_train_monthly_means(train_df, variables=None):
+    """Compute city×month means from training data for leak-free anomaly features.
+
+    Returns dict {(city, month): {variable: mean_value}}.
+    """
+    if variables is None:
+        variables = ["Temperature_C_mean", "Humidity_percent_mean", "Rain_mm_sum"]
+    result = {}
+    for (city, month), grp in train_df.groupby(["City", "Month"]):
+        result[(city, month)] = {v: grp[v].mean() for v in variables if v in grp.columns}
+    return result

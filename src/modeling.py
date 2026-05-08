@@ -1,5 +1,5 @@
 """
-ARIAN Wildfire Prediction — Modeling Utilities
+MANHEIM Wildfire Prediction — Modeling Utilities
 ================================================
 Model factories, training helpers, hyperparameter search utilities.
 """
@@ -9,27 +9,15 @@ import warnings
 warnings.filterwarnings("ignore")
 
 from sklearn.ensemble import (
-    RandomForestClassifier, ExtraTreesClassifier,
     RandomForestRegressor, ExtraTreesRegressor,
-    HistGradientBoostingRegressor, HistGradientBoostingClassifier,
+    HistGradientBoostingRegressor,
 )
 from sklearn.linear_model import Ridge, ElasticNet, LogisticRegression
 from sklearn.calibration import CalibratedClassifierCV
 
+from src.config import XGB_GPU_PARAMS, CB_GPU_PARAMS, LGB_GPU_PARAMS, GPU_AVAILABLE
+
 SEED = 42
-
-
-def _gpu_available() -> bool:
-    """Return True if a CUDA GPU is usable for tree-based boosters."""
-    try:
-        import subprocess
-        r = subprocess.run(["nvidia-smi"], capture_output=True, timeout=5)
-        return r.returncode == 0
-    except Exception:
-        return False
-
-
-USE_GPU = _gpu_available()
 
 
 # ═══════════════════════════════════════════════════════════════════════════
@@ -54,36 +42,30 @@ def get_weather_models():
 
     try:
         import xgboost as xgb
-        xgb_params = dict(
+        models["XGBoost"] = xgb.XGBRegressor(
             n_estimators=500, max_depth=8, learning_rate=0.05,
             subsample=0.8, colsample_bytree=0.8,
-            random_state=SEED, n_jobs=-1, verbosity=0)
-        if USE_GPU:
-            xgb_params["tree_method"] = "gpu_hist"
-        models["XGBoost"] = xgb.XGBRegressor(**xgb_params)
+            random_state=SEED, n_jobs=-1, verbosity=0,
+            **XGB_GPU_PARAMS)
     except ImportError:
         pass
 
     try:
         import lightgbm as lgb
-        lgb_params = dict(
+        models["LightGBM"] = lgb.LGBMRegressor(
             n_estimators=500, max_depth=8, learning_rate=0.05,
             subsample=0.8, colsample_bytree=0.8,
-            random_state=SEED, n_jobs=-1, verbose=-1)
-        if USE_GPU:
-            lgb_params["device"] = "gpu"
-        models["LightGBM"] = lgb.LGBMRegressor(**lgb_params)
+            random_state=SEED, n_jobs=-1, verbose=-1,
+            **LGB_GPU_PARAMS)
     except ImportError:
         pass
 
     try:
         import catboost as cb
-        cb_params = dict(
+        models["CatBoost"] = cb.CatBoostRegressor(
             iterations=500, depth=8, learning_rate=0.05,
-            random_seed=SEED, verbose=0)
-        if USE_GPU:
-            cb_params["task_type"] = "GPU"
-        models["CatBoost"] = cb.CatBoostRegressor(**cb_params)
+            random_seed=SEED, verbose=0,
+            **CB_GPU_PARAMS)
     except ImportError:
         pass
 
@@ -95,101 +77,59 @@ def get_weather_models():
 # ═══════════════════════════════════════════════════════════════════════════
 
 def get_fire_models(imbalance_ratio=10.0):
-    """Return dict of {name: (model, imbalance_strategy)} for fire detection."""
+    """Return dict of {name: (model, imbalance_strategy)} for fire detection.
+
+    Final selection: 1 baseline + 3 strong gradient boosters.
+    Other models (MLP, TabNet, EasyEnsemble, BalancedRF) were tested during
+    experimentation and found to be redundant or inferior; they are excluded
+    from the final pipeline to keep the codebase clean.
+    """
     models = {}
 
-    # 1. LogisticRegression baseline
-    models["LogReg_balanced"] = (
+    # ── Baseline: LogisticRegression ──────────────────────────────────────
+    models["LogReg_baseline"] = (
         LogisticRegression(class_weight="balanced", max_iter=1000,
                            random_state=SEED, n_jobs=-1),
         "class_weight=balanced")
 
-    # 2. RandomForest balanced
-    models["RF_balanced"] = (
-        RandomForestClassifier(n_estimators=300, max_depth=20,
-                               min_samples_split=5, class_weight="balanced",
-                               random_state=SEED, n_jobs=-1),
-        "class_weight=balanced")
-
-    # 3. ExtraTrees balanced
-    models["ET_balanced"] = (
-        ExtraTreesClassifier(n_estimators=300, max_depth=20,
-                             min_samples_split=5, class_weight="balanced",
-                             random_state=SEED, n_jobs=-1),
-        "class_weight=balanced")
-
-    # 4. HistGradientBoosting
-    models["HistGBC"] = (
-        HistGradientBoostingClassifier(
-            max_iter=500, max_depth=8, learning_rate=0.05,
-            class_weight="balanced", random_state=SEED),
-        "class_weight=balanced")
-
-    # 5. XGBoost cost-sensitive
-    try:
-        import xgboost as xgb
-        xgb_params = dict(
-            n_estimators=500, max_depth=8, learning_rate=0.05,
-            subsample=0.8, colsample_bytree=0.8,
-            scale_pos_weight=imbalance_ratio,
-            eval_metric="aucpr", random_state=SEED,
-            use_label_encoder=False, n_jobs=-1)
-        if USE_GPU:
-            xgb_params["tree_method"] = "gpu_hist"
-        models["XGB_cost"] = (
-            xgb.XGBClassifier(**xgb_params),
-            f"scale_pos_weight={imbalance_ratio:.1f}" + (", gpu" if USE_GPU else ""))
-    except ImportError:
-        pass
-
-    # 6. LightGBM
-    try:
-        import lightgbm as lgb
-        lgb_params = dict(
-            n_estimators=500, max_depth=8, learning_rate=0.05,
-            subsample=0.8, colsample_bytree=0.8,
-            is_unbalance=True, random_state=SEED, n_jobs=-1, verbose=-1)
-        if USE_GPU:
-            lgb_params["device"] = "gpu"
-        models["LGB_unbalance"] = (
-            lgb.LGBMClassifier(**lgb_params),
-            "is_unbalance=True" + (", device=gpu" if USE_GPU else ""))
-    except ImportError:
-        pass
-
-    # 7. CatBoost
+    # ── Candidate 1: CatBoost (best PR-AUC in experiments) ───────────────
     try:
         import catboost as cb
-        cb_params = dict(
-            iterations=500, depth=8, learning_rate=0.05,
-            auto_class_weights="Balanced", eval_metric="F1",
-            random_seed=SEED, verbose=0)
-        if USE_GPU:
-            cb_params["task_type"] = "GPU"
-        models["CB_balanced"] = (
-            cb.CatBoostClassifier(**cb_params),
-            "auto_class_weights=Balanced" + (", GPU" if USE_GPU else ""))
+        models["CatBoost"] = (
+            cb.CatBoostClassifier(
+                iterations=500, depth=8, learning_rate=0.05,
+                auto_class_weights="Balanced", eval_metric="F1",
+                random_seed=SEED, verbose=0,
+                **CB_GPU_PARAMS),
+            "auto_class_weights=Balanced")
     except ImportError:
         pass
 
-    # 8. BalancedRandomForest (imblearn)
+    # ── Candidate 2: XGBoost (strong recall specialist) ──────────────────
     try:
-        from imblearn.ensemble import BalancedRandomForestClassifier
-        models["BalancedRF"] = (
-            BalancedRandomForestClassifier(
-                n_estimators=300, max_depth=20, min_samples_split=5,
-                random_state=SEED, n_jobs=-1),
-            "balanced_subsample")
+        import xgboost as xgb
+        models["XGBoost"] = (
+            xgb.XGBClassifier(
+                n_estimators=500, max_depth=8, learning_rate=0.05,
+                subsample=0.8, colsample_bytree=0.8,
+                scale_pos_weight=imbalance_ratio,
+                eval_metric="aucpr", random_state=SEED,
+                use_label_encoder=False, n_jobs=-1,
+                **XGB_GPU_PARAMS),
+            f"scale_pos_weight={imbalance_ratio:.1f}")
     except ImportError:
         pass
 
-    # 9. EasyEnsemble (imblearn)
+    # ── Candidate 3: LightGBM (fast, good generalization) ────────────────
     try:
-        from imblearn.ensemble import EasyEnsembleClassifier
-        models["EasyEnsemble"] = (
-            EasyEnsembleClassifier(
-                n_estimators=20, random_state=SEED, n_jobs=-1),
-            "easy_ensemble")
+        import lightgbm as lgb
+        models["LightGBM"] = (
+            lgb.LGBMClassifier(
+                n_estimators=500, max_depth=8, learning_rate=0.05,
+                subsample=0.8, colsample_bytree=0.8,
+                is_unbalance=True, random_state=SEED, n_jobs=-1, verbose=-1,
+                **LGB_GPU_PARAMS),
+            "is_unbalance=True")
     except ImportError:
         pass
 

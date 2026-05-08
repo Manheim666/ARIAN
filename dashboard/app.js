@@ -1,40 +1,84 @@
 /* ═══════════════════════════════════════════════════════════
-   ARIAN Wildfire & Weather Intelligence — app.js
+   MANHEIM Wildfire & Weather Intelligence — app.js  v2
    ═══════════════════════════════════════════════════════════ */
 
 const RISK = {
-  Low:      { color: "#22a66e", bg: "rgba(34,166,110,.08)" },
-  Moderate: { color: "#daa520", bg: "rgba(218,165,32,.08)" },
-  High:     { color: "#e06730", bg: "rgba(224,103,48,.08)" },
-  Extreme:  { color: "#c0392b", bg: "rgba(192,57,43,.08)" },
+  Low:      { color: "#22a66e", bg: "rgba(34,166,110,.08)",  gradient: "linear-gradient(135deg,#22a66e,#2ecc71)" },
+  Moderate: { color: "#daa520", bg: "rgba(218,165,32,.08)",  gradient: "linear-gradient(135deg,#daa520,#f1c40f)" },
+  High:     { color: "#e06730", bg: "rgba(224,103,48,.08)",  gradient: "linear-gradient(135deg,#e06730,#e67e22)" },
+  Extreme:  { color: "#c0392b", bg: "rgba(192,57,43,.08)",   gradient: "linear-gradient(135deg,#c0392b,#e74c3c)" },
 };
 const riskColor = (lvl) => (RISK[lvl] || RISK.Low).color;
+const riskBg    = (lvl) => (RISK[lvl] || RISK.Low).bg;
 
 let forecast = [], hourlyForecast = [], metrics = {};
-let selectedRegion = "Baku", selectedDate = "";
+let selectedRegion = "Baku", selectedDate = "", selectedHour = "";
 let forecastMode = "daily";
 let map, markers = [];
 
-const fmt  = (v) => `${Math.round(v * 100)}%`;
-const f1   = (v) => Number(v).toFixed(1);
-const CIRC = 2 * Math.PI * 52; // SVG ring circumference
+const fmt  = (v) => `${Math.round((v || 0) * 100)}%`;
+const f1   = (v) => Number(v || 0).toFixed(1);
+const CIRC = 2 * Math.PI * 52;
 
 /* ─── DATA LOADING ────────────────────────────────────── */
 async function loadData() {
-  const [fRes, mRes, hRes] = await Promise.all([
-    fetch("./data/forecast_30_days.json"),
-    fetch("./data/metrics.json"),
-    fetch("./data/hourly_forecast_168h.json"),
-  ]);
-  if (!fRes.ok || !mRes.ok || !hRes.ok) throw new Error("Data file not found (HTTP " + [fRes.status,mRes.status,hRes.status].join("/") + ")");
-  forecast       = await fRes.json();
-  metrics        = await mRes.json();
-  hourlyForecast = await hRes.json();
-  selectedDate   = forecast[0].date;
-  selectedRegion = forecast[0].region;
+  try {
+    const [fRes, mRes, hRes] = await Promise.all([
+      fetch("./data/forecast_30_days.json"),
+      fetch("./data/metrics.json"),
+      fetch("./data/hourly_forecast_168h.json"),
+    ]);
+    if (!fRes.ok) throw new Error(`Daily forecast: ${fRes.status}`);
+    if (!mRes.ok) throw new Error(`Metrics: ${mRes.status}`);
+    forecast       = await fRes.json();
+    metrics        = await mRes.json();
+    hourlyForecast = hRes.ok ? await hRes.json() : [];
+  } catch (err) {
+    document.querySelector("main").innerHTML =
+      `<div style="padding:60px 28px;text-align:center"><h2>Could not load data</h2><p>${err.message}</p></div>`;
+    document.body.classList.add("loaded");
+    return;
+  }
+  // Filter out rows with null/undefined probability
+  forecast = forecast.filter(d => d.probability != null && d.region);
+  hourlyForecast = hourlyForecast.filter(d => d.region);
+  selectedDate   = forecast[0]?.date || "";
+  selectedRegion = forecast[0]?.region || "Baku";
+  if (hourlyForecast.length) selectedHour = hourlyForecast[0].timestamp;
   initControls();
   initMap();
   renderAll();
+  document.body.classList.add("loaded");
+}
+
+/* ─── HELPERS: get current data row depending on mode ── */
+function currentRow() {
+  if (forecastMode === "daily") {
+    return forecast.find(d => d.region === selectedRegion && d.date === selectedDate)
+        || forecast.find(d => d.region === selectedRegion)
+        || forecast[0] || {};
+  }
+  // hourly — pick matching hour or first available
+  const hr = hourlyForecast.filter(d => d.region === selectedRegion);
+  if (selectedHour) {
+    const match = hr.find(d => d.timestamp === selectedHour);
+    if (match) return match;
+  }
+  return hr[0] || {};
+}
+
+function dayRows() {
+  if (forecastMode === "daily") return forecast.filter(d => d.date === selectedDate);
+  // hourly — pick latest hour per region for map snapshot
+  const byRegion = {};
+  hourlyForecast.forEach(r => {
+    if (!byRegion[r.region]) byRegion[r.region] = r;
+  });
+  return Object.values(byRegion);
+}
+
+function hourlyRowsForRegion() {
+  return hourlyForecast.filter(d => d.region === selectedRegion);
 }
 
 /* ─── CONTROLS ────────────────────────────────────────── */
@@ -50,13 +94,11 @@ function initControls() {
   const regions = [...new Set(forecast.map(d => d.region))].sort();
   const regOpts = regions.map(r => `<option value="${r}">${r}</option>`).join("");
 
-  // populate all region selects
   ["heroRegionSelect","regionSelect","panelRegionSelect"].forEach(id => {
     const el = document.getElementById(id);
     if (el) { el.innerHTML = regOpts; el.value = selectedRegion; }
   });
 
-  // date picker
   const dp = document.getElementById("datePicker");
   dp.innerHTML = dates.map(d => {
     const lbl = new Date(d+"T00:00").toLocaleDateString("en-US",{month:"short",day:"numeric"});
@@ -64,14 +106,12 @@ function initControls() {
   }).join("");
   dp.value = selectedDate;
 
-  // table date filter
   const tdf = document.getElementById("tableDateFilter");
   tdf.innerHTML = '<option value="">All dates</option>' + dates.map(d => {
     const lbl = new Date(d+"T00:00").toLocaleDateString("en-US",{month:"short",day:"numeric"});
     return `<option value="${d}">${lbl}</option>`;
   }).join("");
 
-  // listeners
   dp.onchange = e => { selectedDate = e.target.value; renderAll(); };
   ["heroRegionSelect","regionSelect","panelRegionSelect"].forEach(id => {
     const el = document.getElementById(id);
@@ -83,39 +123,39 @@ function initControls() {
   document.getElementById("riskFilter").onchange  = renderTable;
   tdf.onchange = renderTable;
 
-  document.getElementById("modelStatus").textContent =
-    `${metrics.selected_model} · ${metrics.prediction_horizon_days}-day forecast`;
+  const modelName = metrics.selected_model || "Model";
+  const days = metrics.prediction_horizon_days || 30;
+  document.getElementById("modelStatus").textContent = `${modelName} · ${days}-day`;
 }
 
 /* ─── MAP ─────────────────────────────────────────────── */
 function initMap() {
-  map = L.map("map", { zoomControl: true }).setView([40.35, 47.8], 7);
+  map = L.map("map", { zoomControl: true, scrollWheelZoom: true }).setView([40.35, 47.8], 7);
   L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
     maxZoom: 18, attribution: "CartoDB"
   }).addTo(map);
 }
 
-function dayRows() { return forecast.filter(d => d.date === selectedDate); }
-function currentRow() {
-  return forecast.find(d => d.region === selectedRegion && d.date === selectedDate)
-      || forecast.find(d => d.region === selectedRegion)
-      || forecast[0];
-}
-
 function renderMap() {
   markers.forEach(m => m.remove()); markers = [];
-  dayRows().forEach(row => {
+  if (!map) return;
+  const rows = dayRows();
+  rows.forEach(row => {
+    if (!row.Latitude || !row.Longitude) return;
     const sel = row.region === selectedRegion;
+    const prob = row.probability || 0;
+    const lvl  = row.risk_level || "Low";
+    const col  = riskColor(lvl);
     const c = L.circle([row.Latitude, row.Longitude], {
-      radius: 22000, color: riskColor(row.risk_level),
-      weight: sel ? 3 : 1, fillColor: riskColor(row.risk_level),
-      fillOpacity: sel ? 0.22 : 0.10,
+      radius: 22000, color: col,
+      weight: sel ? 3 : 1, fillColor: col,
+      fillOpacity: sel ? 0.25 : 0.10,
     }).addTo(map);
     const m = L.marker([row.Latitude, row.Longitude], {
       icon: L.divIcon({ className: "", iconSize: [22,22], iconAnchor: [11,11],
-        html: `<div style="width:${sel?22:16}px;height:${sel?22:16}px;border-radius:50%;background:${riskColor(row.risk_level)};border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.25)"></div>` })
+        html: `<div style="width:${sel?24:16}px;height:${sel?24:16}px;border-radius:50%;background:${col};border:3px solid #fff;box-shadow:0 2px 10px rgba(0,0,0,.3);transition:all .2s"></div>` })
     }).addTo(map);
-    m.bindTooltip(`<b>${row.region}</b><br>${row.risk_level} · ${fmt(row.probability)}`);
+    m.bindTooltip(`<b>${row.region}</b><br>${lvl} · ${fmt(prob)}`, {direction:"top",offset:[0,-10]});
     const pick = () => { selectedRegion = row.region; syncAllRegionSelects(); renderAll(); };
     m.on("click", pick); c.on("click", pick);
     markers.push(c, m);
@@ -125,19 +165,36 @@ function renderMap() {
 /* ─── HERO ────────────────────────────────────────────── */
 function renderHero() {
   const row = currentRow();
-  document.getElementById("heroCity").textContent = row.region;
-  document.getElementById("heroTemp").textContent     = `${f1(row.temperature)}°C`;
-  document.getElementById("heroWind").textContent     = `${f1(row.wind)} km/h`;
-  document.getElementById("heroHumidity").textContent = `${f1(row.humidity)}%`;
-  document.getElementById("heroRain").textContent     = `${Number(row.rain).toFixed(2)} mm`;
-  document.getElementById("heroSummary").textContent  = row.climate_summary || "";
-  document.getElementById("heroWarning").textContent  = row.warning || "";
+  if (!row || !row.region) return;
+
+  document.getElementById("heroCity").textContent     = row.region;
+  document.getElementById("heroTemp").textContent     = `${f1(row.temperature || 0)}°C`;
+  document.getElementById("heroWind").textContent     = `${f1(row.wind || 0)} km/h`;
+  document.getElementById("heroHumidity").textContent = `${f1(row.humidity || 0)}%`;
+
+  const rainEl = document.getElementById("heroRain");
+  if (forecastMode === "daily") {
+    rainEl.textContent = `${Number(row.rain || 0).toFixed(2)} mm`;
+    rainEl.closest(".cond-card").querySelector("small").textContent = "Rain";
+    document.getElementById("heroSummary").textContent = row.climate_summary || "";
+    document.getElementById("heroWarning").textContent = row.warning || "";
+    document.getElementById("heroSubtitle").textContent = `Azerbaijan · ${row.date || ""}`;
+  } else {
+    rainEl.textContent = `${f1(row.solar || 0)} W/m²`;
+    rainEl.closest(".cond-card").querySelector("small").textContent = "Solar";
+    const ts = row.timestamp ? new Date(row.timestamp) : null;
+    document.getElementById("heroSummary").textContent =
+      ts ? `Hourly forecast from ${ts.toLocaleDateString("en",{month:"short",day:"numeric"})}` : "";
+    document.getElementById("heroWarning").textContent = "";
+    document.getElementById("heroSubtitle").textContent = `Azerbaijan · 168-Hour Forecast`;
+  }
 
   // risk ring
-  const pct = row.probability;
-  const col = riskColor(row.risk_level);
+  const pct = row.probability || 0;
+  const lvl = row.risk_level || "Low";
+  const col = riskColor(lvl);
   document.getElementById("heroRiskPct").textContent   = fmt(pct);
-  document.getElementById("heroRiskLevel").textContent = row.risk_level;
+  document.getElementById("heroRiskLevel").textContent = lvl;
   document.getElementById("heroRiskLevel").style.color = col;
   const arc = document.getElementById("riskArc");
   arc.style.strokeDashoffset = CIRC - (CIRC * Math.min(pct, 1));
@@ -147,32 +204,56 @@ function renderHero() {
 /* ─── DETAIL PANEL ────────────────────────────────────── */
 function renderPanel() {
   const row = currentRow();
+  if (!row || !row.region) return;
+
   document.getElementById("panelCity").textContent = row.region;
   document.getElementById("panelRegionSelect").value = row.region;
   const chip = document.getElementById("dpRiskChip");
-  chip.textContent = row.risk_level;
-  chip.style.background = riskColor(row.risk_level);
-  document.getElementById("dpRiskPct").textContent = fmt(row.probability);
-  document.getElementById("dpRiskRow").style.background = (RISK[row.risk_level]||RISK.Low).bg;
-  document.getElementById("dpTemp").textContent     = `${f1(row.temperature)}°C`;
-  document.getElementById("dpWind").textContent     = `${f1(row.wind)} km/h`;
-  document.getElementById("dpHumidity").textContent = `${f1(row.humidity)}%`;
-  document.getElementById("dpRain").textContent     = `${Number(row.rain).toFixed(2)} mm`;
-  document.getElementById("dpSummary").textContent  = row.climate_summary || "";
-  document.getElementById("dpWarning").textContent  = row.warning || "";
+  const lvl = row.risk_level || "Low";
+  chip.textContent = lvl;
+  chip.style.background = riskColor(lvl);
+  document.getElementById("dpRiskPct").textContent = fmt(row.probability || 0);
+  document.getElementById("dpRiskRow").style.background = riskBg(lvl);
+  document.getElementById("dpTemp").textContent     = `${f1(row.temperature || 0)}°C`;
+  document.getElementById("dpWind").textContent     = `${f1(row.wind || 0)} km/h`;
+  document.getElementById("dpHumidity").textContent = `${f1(row.humidity || 0)}%`;
 
-  // mini trend
-  const rr = forecast.filter(d => d.region === selectedRegion);
-  Plotly.react("dpTrendChart", [{
-    x: rr.map(d => d.date), y: rr.map(d => d.probability*100),
-    type:"scatter", mode:"lines", line:{color:"#4a9eda",width:2},
-    fill:"tozeroy", fillcolor:"rgba(74,158,218,.10)",
-    hovertemplate:"%{x}<br>%{y:.1f}%<extra></extra>",
-  }], {
-    margin:{t:4,r:4,b:24,l:30}, paper_bgcolor:"transparent", plot_bgcolor:"transparent",
-    yaxis:{ticksuffix:"%",gridcolor:"#eef2f6",tickfont:{size:10}},
-    xaxis:{gridcolor:"#eef2f6",tickfont:{size:9}},
-  }, {displayModeBar:false, responsive:true});
+  if (forecastMode === "daily") {
+    document.getElementById("dpRain").textContent = `${Number(row.rain || 0).toFixed(2)} mm`;
+    document.getElementById("dpSummary").textContent = row.climate_summary || "";
+    document.getElementById("dpWarning").textContent = row.warning || "";
+  } else {
+    document.getElementById("dpRain").textContent = `${f1(row.solar || 0)} W/m²`;
+    document.getElementById("dpSummary").textContent = "";
+    document.getElementById("dpWarning").textContent = "";
+  }
+
+  // mini trend — daily or hourly
+  if (forecastMode === "daily") {
+    const rr = forecast.filter(d => d.region === selectedRegion);
+    Plotly.react("dpTrendChart", [{
+      x: rr.map(d => d.date), y: rr.map(d => d.probability*100),
+      type:"scatter", mode:"lines", line:{color:"#4a9eda",width:2},
+      fill:"tozeroy", fillcolor:"rgba(74,158,218,.10)",
+      hovertemplate:"%{x}<br>%{y:.1f}%<extra></extra>",
+    }], {
+      margin:{t:4,r:4,b:24,l:30}, paper_bgcolor:"transparent", plot_bgcolor:"transparent",
+      yaxis:{ticksuffix:"%",gridcolor:"#eef2f6",tickfont:{size:10}},
+      xaxis:{gridcolor:"#eef2f6",tickfont:{size:9}},
+    }, {displayModeBar:false, responsive:true});
+  } else {
+    const rr = hourlyRowsForRegion();
+    Plotly.react("dpTrendChart", [{
+      x: rr.map(d => d.timestamp), y: rr.map(d => (d.probability||0)*100),
+      type:"scatter", mode:"lines", line:{color:"#4a9eda",width:2},
+      fill:"tozeroy", fillcolor:"rgba(74,158,218,.10)",
+      hovertemplate:"%{x}<br>%{y:.1f}%<extra></extra>",
+    }], {
+      margin:{t:4,r:4,b:24,l:30}, paper_bgcolor:"transparent", plot_bgcolor:"transparent",
+      yaxis:{ticksuffix:"%",gridcolor:"#eef2f6",tickfont:{size:10}},
+      xaxis:{gridcolor:"#eef2f6",tickfont:{size:9}},
+    }, {displayModeBar:false, responsive:true});
+  }
 }
 
 /* ─── FORECAST STRIP ──────────────────────────────────── */
@@ -198,15 +279,15 @@ function renderStrip() {
     });
   } else {
     document.getElementById("stripTitle").textContent = "168-Hour Outlook";
-    const rows = hourlyForecast.filter(d => d.region === selectedRegion);
-    // show every 3rd hour for readability
+    const rows = hourlyRowsForRegion();
     const sampled = rows.filter((_,i) => i % 3 === 0);
-    strip.innerHTML = sampled.map(row => {
+    strip.innerHTML = sampled.map((row,i) => {
       const ts = new Date(row.timestamp);
       const prob = row.probability || 0;
       const lvl  = row.risk_level || "Low";
       const col  = riskColor(lvl);
-      return `<div class="fc-card">
+      const active = i === 0 ? " active" : "";
+      return `<div class="fc-card${active}" data-ts="${row.timestamp}">
         <div class="fc-date">${ts.toLocaleDateString("en",{weekday:"short"})}<br>${ts.getHours().toString().padStart(2,"0")}:00</div>
         <div class="fc-risk-dot" style="background:${col}">${Math.round(prob*100)}</div>
         <div class="fc-temp">${f1(row.temperature)}°</div>
@@ -231,7 +312,7 @@ function renderDailyCharts() {
   const rr = forecast.filter(d => d.region === selectedRegion);
   Plotly.react("mainRiskChart", [{
     x:rr.map(d=>d.date), y:rr.map(d=>d.probability*100),
-    type:"bar", marker:{color:rr.map(d=>riskColor(d.risk_level)), opacity:0.85},
+    type:"bar", marker:{color:rr.map(d=>riskColor(d.risk_level)), opacity:0.85, line:{width:0}},
     hovertemplate:"%{x}<br>Risk: %{y:.1f}%<extra></extra>",
   }], LAYOUT({yaxis:{ticksuffix:"%",gridcolor:"#eef2f6"}}), PCFG);
 
@@ -244,7 +325,7 @@ function renderDailyCharts() {
 
 /* ─── HOURLY CHARTS ───────────────────────────────────── */
 function renderHourlyCharts() {
-  const rr = hourlyForecast.filter(d => d.region === selectedRegion);
+  const rr = hourlyRowsForRegion();
   if (!rr.length) return;
   const hasRisk = rr[0].probability !== undefined;
 
@@ -284,16 +365,34 @@ function renderHourlyCharts() {
 function renderTable() {
   const rf = document.getElementById("riskFilter").value;
   const df = document.getElementById("tableDateFilter").value;
-  let rows = forecast.filter(d => d.region === selectedRegion);
-  if (rf !== "All") rows = rows.filter(d => d.risk_level === rf);
-  if (df) rows = rows.filter(d => d.date === df);
-  document.getElementById("forecastTable").innerHTML = rows.map(r => `
-    <tr>
-      <td>${r.date}</td><td>${r.region}</td>
-      <td><span class="risk-chip" style="background:${riskColor(r.risk_level)}">${r.risk_level}</span></td>
-      <td>${fmt(r.probability)}</td>
-      <td>${f1(r.temperature)}°C</td><td>${f1(r.wind)} km/h</td><td>${f1(r.humidity)}%</td>
-    </tr>`).join("");
+
+  if (forecastMode === "daily") {
+    document.getElementById("tableTitle").textContent = "Detailed Forecast";
+    let rows = forecast.filter(d => d.region === selectedRegion);
+    if (rf !== "All") rows = rows.filter(d => d.risk_level === rf);
+    if (df) rows = rows.filter(d => d.date === df);
+    document.getElementById("forecastTable").innerHTML = rows.map(r => `
+      <tr>
+        <td>${r.date}</td><td>${r.region}</td>
+        <td><span class="risk-chip" style="background:${riskColor(r.risk_level)}">${r.risk_level}</span></td>
+        <td>${fmt(r.probability)}</td>
+        <td>${f1(r.temperature)}°C</td><td>${f1(r.wind)} km/h</td><td>${f1(r.humidity)}%</td>
+      </tr>`).join("");
+  } else {
+    document.getElementById("tableTitle").textContent = "Hourly Forecast Detail";
+    let rows = hourlyRowsForRegion();
+    if (rf !== "All") rows = rows.filter(d => (d.risk_level||"Low") === rf);
+    document.getElementById("forecastTable").innerHTML = rows.map(r => {
+      const prob = r.probability || 0;
+      const lvl  = r.risk_level || "Low";
+      return `<tr>
+        <td>${r.timestamp}</td><td>${r.region}</td>
+        <td><span class="risk-chip" style="background:${riskColor(lvl)}">${lvl}</span></td>
+        <td>${fmt(prob)}</td>
+        <td>${f1(r.temperature)}°C</td><td>${f1(r.wind)} km/h</td><td>${f1(r.humidity)}%</td>
+      </tr>`;
+    }).join("");
+  }
 }
 
 /* ─── MODE TOGGLE ─────────────────────────────────────── */
@@ -303,8 +402,18 @@ function setMode(mode) {
   document.getElementById("toggleHourly").classList.toggle("active", mode==="hourly");
   document.getElementById("chartsSection").style.display        = mode==="daily" ? "" : "none";
   document.getElementById("hourlyChartsSection").style.display  = mode==="hourly" ? "" : "none";
-  document.getElementById("tableSection").style.display         = mode==="daily" ? "" : "none";
+  // Show table in both modes
+  document.getElementById("tableSection").style.display         = "";
   document.getElementById("chartRiskTitle").textContent = mode==="daily" ? "Risk Trend — 30 Days" : "Fire Risk — 168 Hours";
+
+  // Update model status badge
+  if (mode === "hourly" && metrics.hourly_model) {
+    document.getElementById("modelStatus").textContent =
+      `${metrics.hourly_model.model_name} · ${metrics.hourly_model.prediction_horizon_hours}h`;
+  } else {
+    document.getElementById("modelStatus").textContent =
+      `${metrics.selected_model || "Model"} · ${metrics.prediction_horizon_days || 30}-day`;
+  }
   renderAll();
 }
 
@@ -314,9 +423,9 @@ function renderAll() {
   renderMap();
   renderPanel();
   renderStrip();
+  renderTable();
   if (forecastMode === "daily") {
     renderDailyCharts();
-    renderTable();
   } else {
     renderHourlyCharts();
   }
@@ -324,6 +433,8 @@ function renderAll() {
 
 /* ─── BOOT ────────────────────────────────────────────── */
 loadData().catch(err => {
+  console.error("MANHEIM load error:", err);
   document.querySelector("main").innerHTML =
     `<div style="padding:60px 28px;text-align:center"><h2>Could not load data</h2><p>${err.message}</p></div>`;
+  document.body.classList.add("loaded");
 });

@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-05-07T04:17:47.607540+04:00",
+  "generated_at": "2026-05-08T06:01:16.521592+04:00",
   "prediction_horizon_days": 30,
   "target": "Daily probability of a NASA FIRMS wildfire detection within the city risk area",
-  "selected_model": "CatBoost",
-  "selected_threshold": 0.5,
+  "selected_model": "CatBoost_Optuna",
+  "selected_threshold": 0.44,
   "feature_count": 184,
   "risk_levels": {
     "Low": "< 15%",
@@ -17,9 +17,9 @@
     "Open-Elevation/static geography"
   ],
   "hourly_model": {
-    "model_name": "CatBoost_H",
-    "optimal_threshold": 0.5,
+    "model_name": "CatBoost_H_Optuna",
+    "optimal_threshold": 0.5799999999999997,
     "prediction_horizon_hours": 168,
-    "n_features": 68
+    "n_features": 70
   }
 }

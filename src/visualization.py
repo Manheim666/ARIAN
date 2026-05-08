@@ -1,5 +1,5 @@
 """
-ARIAN Wildfire Prediction — Visualization Utilities
+MANHEIM Wildfire Prediction — Visualization Utilities
 =====================================================
 Reusable plotting functions for EDA, evaluation, and maps.
 """

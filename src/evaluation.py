@@ -1,5 +1,5 @@
 """
-ARIAN Wildfire Prediction — Evaluation Utilities
+MANHEIM Wildfire Prediction — Evaluation Utilities
 ==================================================
 Metrics, threshold tuning, leaderboard helpers.
 """
@@ -40,33 +40,63 @@ def fire_metrics(y_true, y_pred, y_prob=None):
 
 
 def find_optimal_threshold(y_true, y_prob,
-                           recall_weight=0.3, f1_weight=0.4,
-                           precision_weight=0.3,
+                           recall_weight=0.6, f1_weight=0.4,
+                           precision_weight=0.0,
                            min_precision=0.30, min_recall=0.70,
                            grid=None):
-    """Find threshold that maximises weighted recall+precision+f1 subject to
-    min precision (>=0.30) and min recall (>=0.70) hard gates.
+    """Find threshold that maximises recall-weighted objective subject to gates.
+
+    For wildfire early warning, recall is prioritised — missing a fire is far
+    worse than a false alarm.  The default objective is 0.6×Recall + 0.4×F1
+    (precision enters implicitly through F1).
+
+    Fallback strategy when no threshold meets both hard gates:
+      1. Relax precision to 20 % and try again.
+      2. Relax recall to 50 %, keep precision ≥ 20 %.
+      3. Maximise F1 as a last resort.
     """
     if grid is None:
-        grid = np.arange(0.05, 0.95, 0.01)
+        grid = np.arange(0.05, 0.95, 0.005)
 
-    best_thresh, best_score = 0.5, -1
+    def _best_in_grid(prec_floor, rec_floor):
+        best_t, best_s = None, -1
+        for t in grid:
+            y_pred = (y_prob >= t).astype(int)
+            rec  = recall_score(y_true, y_pred, zero_division=0)
+            prec = precision_score(y_true, y_pred, zero_division=0)
+            f1v  = f1_score(y_true, y_pred, zero_division=0)
+            if prec < prec_floor or rec < rec_floor:
+                continue
+            score = recall_weight * rec + precision_weight * prec + f1_weight * f1v
+            if score > best_s:
+                best_s = score
+                best_t = t
+        return best_t
+
+    # Primary search
+    t = _best_in_grid(min_precision, min_recall)
+    if t is not None:
+        return t
+
+    # Fallback 1: relax precision to 20 %
+    t = _best_in_grid(0.20, min_recall)
+    if t is not None:
+        return t
+
+    # Fallback 2: relax recall to 50 %, keep precision ≥ 20 %
+    t = _best_in_grid(0.20, 0.50)
+    if t is not None:
+        return t
+
+    # Fallback 3: maximise F1 (balances precision and recall)
+    best_t, best_f1 = 0.5, -1
     for t in grid:
         y_pred = (y_prob >= t).astype(int)
-        rec  = recall_score(y_true, y_pred, zero_division=0)
-        prec = precision_score(y_true, y_pred, zero_division=0)
-        f1   = f1_score(y_true, y_pred, zero_division=0)
-
-        # Reject thresholds that break hard gates
-        if prec < min_precision or rec < min_recall:
-            continue
-
-        score = recall_weight * rec + precision_weight * prec + f1_weight * f1
-        if score > best_score:
-            best_score  = score
-            best_thresh = t
-
-    return best_thresh
+        f1v = f1_score(y_true, y_pred, zero_division=0)
+        if f1v > best_f1:
+            best_f1 = f1v
+            best_t = t
+    return best_t
 
 
 def build_fire_leaderboard(results_dict):
@@ -95,7 +125,7 @@ def build_fire_leaderboard(results_dict):
     for col in ("recall", "precision", "f1"):
         if col not in lb.columns:
             lb[col] = 0.0
-    lb["composite"] = 0.3 * lb["recall"] + 0.3 * lb["precision"] + 0.4 * lb["f1"]
+    lb["composite"] = 0.6 * lb["recall"] + 0.4 * lb["f1"]
     lb = lb.sort_values("composite", ascending=False).reset_index(drop=True)
     return lb
 

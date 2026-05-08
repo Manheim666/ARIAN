@@ -1,0 +1,11 @@
+MANHEIM Pipeline — 2026-05-08 06:01:30
+mode=full  script=False  fast=False
+================================================================
+OK    01_Data_Ingestion.ipynb                          4m 21s
+OK    02_EDA_FeatureEngineering.ipynb                 20m 57s
+OK    03_Weather_TimeSeries.ipynb                    360m 46s
+OK    04_Wildfire_Detection.ipynb                    232m 48s
+OK    05_Risk_Prediction_Dashboard.ipynb                  14s
+OK    06_Climate_Report.ipynb                              6s
+================================================================
+Total time: 619m 19s
