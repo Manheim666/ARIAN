@@ -2,11 +2,8 @@ name: Daily update and deploy dashboard
 
 on:
   schedule:
-    # Runs every day at 04:00 UTC = 08:00 Azerbaijan time
-    - cron: "0 4 * * *"
-
+    - cron: "0 4 * * *"   # Every day at 08:00 Azerbaijan time
   workflow_dispatch:
-
   push:
     branches:
       - main
@@ -36,7 +33,19 @@ jobs:
           lfs: true
 
       - name: Pull Git LFS files
-        run: git lfs pull
+        run: |
+          git lfs pull
+          echo "Checking for LFS pointer files inside docs..."
+          grep -R "version https://git-lfs.github.com/spec/v1" -n docs || true
+
+      - name: Show repository structure
+        run: |
+          pwd
+          ls -la
+          echo "Docs:"
+          ls -la docs || true
+          echo "Python files:"
+          find . -maxdepth 2 -name "*.py" | sort
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -54,6 +63,10 @@ jobs:
           fi
 
       - name: Run wildfire pipeline
+        env:
+          CI: true
+          GITHUB_ACTIONS: true
+          SKIP_GEE_AUTH: true
         run: |
           python run_pipeline.py
 
