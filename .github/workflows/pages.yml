@@ -38,8 +38,8 @@ jobs:
           git lfs install
 
           git lfs pull \
-            --include="dashboard/data/**,docs/**,data/processed/**,notebooks/**" \
-            --exclude="data/raw/**,models/**,*.zip,*.tif,*.h5,*.keras,*.pt,*.pth"
+            --include="data/raw/firms/**,data/raw/legacy/**,data/reference/**,models/**,docs/**" \
+            --exclude="*.tif,*.h5,*.keras,*.pt,*.pth,*.zip,*.kmz"
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -67,7 +67,7 @@ jobs:
           GITHUB_ACTIONS: true
           SKIP_GEE_AUTH: true
         run: |
-          python run_pipeline.py
+          python run_pipeline.py --mode daily --timeout 3600
 
       - name: Check dashboard files
         run: |

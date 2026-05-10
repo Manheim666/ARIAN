@@ -31,11 +31,16 @@ logs/
 *.tmp
 *.bak
 
-# Model artifacts (large binary files)
-models/**/*.joblib
-models/**/*.pkl
+# Model artifacts NOT tracked via LFS (local-only junk)
 models/**/*.h5
 models/**/*.cbm
+
+# Generated pipeline outputs (recreated on every run)
+outputs/
+dashboard/
+reports/maps/
+reports/figures/
+reports/metrics/
 
 # Local environments
 .venv/
