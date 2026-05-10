@@ -1,0 +1,44 @@
+name: Update wildfire forecast
+
+on:
+  schedule:
+    - cron: '0 3 * * *'   # 03:00 UTC = 07:00 Baku time, every day
+  workflow_dispatch:        # allow manual trigger from GitHub UI
+
+permissions:
+  contents: write
+
+jobs:
+  update-forecast:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          lfs: false
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install catboost pandas numpy requests
+
+      - name: Run forecast update
+        run: python scripts/update_forecast.py
+
+      - name: Commit and push updated forecast
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/data/forecast_30_days.json docs/data/hourly_forecast_168h.json docs/data/metrics.json
+          if git diff --cached --quiet; then
+            echo "No changes to commit, skipping push"
+          else
+            git commit -m "Update forecast $(date -u +%Y-%m-%d)"
+            git push
+          fi

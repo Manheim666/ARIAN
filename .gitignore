@@ -31,19 +31,27 @@ logs/
 *.tmp
 *.bak
 
-# Model artifacts NOT tracked via LFS (local-only junk)
+# Model artifacts (large binary files)
+models/**/*.joblib
+models/**/*.pkl
 models/**/*.h5
 models/**/*.cbm
-
-# Generated pipeline outputs (recreated on every run)
-outputs/
-dashboard/
-reports/maps/
-reports/figures/
-reports/metrics/
 
 # Local environments
 .venv/
 venv/
 .env
 local/
+
+# Large/generated data - keep local, do not commit
+/data/
+outputs/
+reports/metrics/
+reports/figures/
+reports/maps/
+dashboard/data/
+
+# Generated file types
+*.parquet
+*.csv
+# Note: *.json NOT ignored globally — docs/data/*.json needed for dashboard Pages deployment

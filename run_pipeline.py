@@ -68,7 +68,6 @@ MODE_NOTEBOOKS: dict[str, list[int]] = {
     "train":   [1, 2, 3, 4],
     "predict": [5, 6],
     "weather": [1, 3],
-    "daily":   [1, 2, 3, 5],   # CI daily: fresh data + cached models, skip retrain
 }
 
 NOTEBOOK_DIR    = PROJECT_ROOT / "notebooks"
@@ -249,7 +248,7 @@ def main():
         description="MANHEIM — single pipeline entry point",
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
-    parser.add_argument("--mode", choices=["full", "train", "predict", "weather", "daily"],
+    parser.add_argument("--mode", choices=["full", "train", "predict", "weather"],
                         default="full",
                         help="Pipeline mode (default: full)")
     parser.add_argument("--script", action="store_true",
