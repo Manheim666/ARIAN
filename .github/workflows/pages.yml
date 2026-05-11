@@ -37,6 +37,7 @@ jobs:
         with:
           lfs: false
           fetch-depth: 1
+          ref: main
 
       - name: Check dashboard files
         run: |
